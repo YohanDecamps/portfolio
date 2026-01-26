@@ -1,11 +1,13 @@
 import * as THREE from 'three'
 import type { Updatable } from './objects/Updatable'
 import type { PhysicsWorld } from './physics/physics'
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js'
 
 export class App {
   private clock = new THREE.Clock()
 
   private renderer: THREE.WebGLRenderer
+  private composer: THREE.EffectComposer
   private scene: THREE.Scene
   private camera: THREE.Camera
   private physicsWorld: PhysicsWorld
@@ -16,8 +18,9 @@ export class App {
     this.updatables.push(updatable)
   }
 
-  constructor(renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.Camera, physicsWorld: PhysicsWorld
+  constructor(renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.Camera, physicsWorld: PhysicsWorld, composer: EffectComposer
   ) {
+    this.composer = composer
     this.renderer = renderer
     this.scene = scene
     this.camera = camera
@@ -45,6 +48,6 @@ export class App {
   }
 
   private render() {
-    this.renderer.render(this.scene, this.camera)
+    this.composer.render()
   }
 }

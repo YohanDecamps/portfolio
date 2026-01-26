@@ -1,4 +1,7 @@
 import * as THREE from 'three'
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js'
+import { RenderPixelatedPass } from './post/RenderPixelatedPass'
 import './style.css'
 import { App } from './App'
 import { Player } from './objects/Player'
@@ -25,10 +28,9 @@ camera.position.x = 10
 
 camera.lookAt(0, 0, 0)
 
-const renderer = new THREE.WebGLRenderer({ antialias: true })
-renderer.setSize(window.innerWidth, window.innerHeight)
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-renderer.shadowMap.enabled = true;
+const renderer = new THREE.WebGLRenderer({ antialias: false })
+renderer.outputColorSpace = THREE.SRGBColorSpace
+renderer.toneMapping = THREE.NoToneMapping
 
 document.body.appendChild(renderer.domElement)
 renderer.domElement.style.display = 'block'
@@ -45,14 +47,28 @@ window.addEventListener('resize', () => {
 
   renderer.setSize(width, height)
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+  composer.setSize(width, height)
 })
+
+const composer = new EffectComposer(renderer)
+
+const renderPass = new RenderPass(scene, camera)
+composer.addPass(renderPass)
+
+const pixelPass = new RenderPixelatedPass(6, scene, camera, {
+  normalEdgeStrength: 0.3,
+  depthEdgeStrength: 0.4
+})
+
+composer.addPass(pixelPass)
 
 const geometry = new THREE.BoxGeometry(1, 1, 1)
 const material = new THREE.MeshStandardMaterial({ color: 0xff5555 })
 const playerMesh = new THREE.Mesh(geometry, material)
 playerMesh.castShadow = true;
 
-const floorGeometry = new THREE.BoxGeometry(10, 0.1, 10)
+const floorGeometry = new THREE.BoxGeometry(10, 1, 10)
 const floorMaterial = new THREE.MeshStandardMaterial({ color: 0xFFFFFF })
 const floorMesh = new THREE.Mesh(floorGeometry, floorMaterial)
 floorMesh.receiveShadow = true;
@@ -74,7 +90,7 @@ await physicsWorld.init()
 
 let input = new InputManager()
 
-let app = new App(renderer, scene, camera, physicsWorld)
+let app = new App(renderer, scene, camera, physicsWorld, composer)
 
 let player = new Player(playerMesh, physicsWorld)
 let floor = new Floor(floorMesh, physicsWorld)

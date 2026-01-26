@@ -10,7 +10,7 @@ export class Floor extends RigidBody implements Updatable {
   constructor(object: THREE.Object3D, world: PhysicsWorld) {
     let body = world.world.createRigidBody( RigidBodyDesc.fixed()
                                            .setTranslation(0, -5, 0))
-    const collider = RAPIER.ColliderDesc.cuboid(5, 0.05, 5)
+    const collider = RAPIER.ColliderDesc.cuboid(5, 0.5, 5)
     world.world.createCollider(collider, body)
 
     super(

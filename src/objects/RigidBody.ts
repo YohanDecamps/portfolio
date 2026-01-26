@@ -14,7 +14,6 @@ export abstract class RigidBody {
   }
 
   update(dt: number): void {
-    console.log("RigidBody update")
     this.world.syncMesh(this.mesh, this.body)
   }
 }
