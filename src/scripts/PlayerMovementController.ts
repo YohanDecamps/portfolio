@@ -6,9 +6,8 @@ export class PlayerMovementController implements Updatable {
   private input: InputManager
   private player: Player
 
-  // --- Tunables ---
   private engineForce = 2
-  private brakeForce = 15
+  private brakeForce = 10
   private maxSteering = 0.4
 
   constructor(input: InputManager, player: Player) {
@@ -17,11 +16,10 @@ export class PlayerMovementController implements Updatable {
   }
 
   update(_: number) {
-    const vehicle = this.player['vehicle'] // or expose a getter if you prefer
+    const vehicle = this.player['vehicle']
 
     if (!vehicle) return
 
-    // --- Throttle / brake ---
     let engine = 0
     let brake = 0
 
@@ -37,20 +35,16 @@ export class PlayerMovementController implements Updatable {
       brake = this.brakeForce
     }
 
-    // --- Steering ---
     let steering = 0
-    if (this.input.isKeyDown('KeyA')) steering = this.maxSteering
-    if (this.input.isKeyDown('KeyD')) steering = -this.maxSteering
+    if (this.input.isKeyDown('KeyA')) steering = -this.maxSteering
+    if (this.input.isKeyDown('KeyD')) steering = this.maxSteering
 
-    // Front wheels steer
-    vehicle.setWheelSteering(0, steering)
-    vehicle.setWheelSteering(1, steering)
+    vehicle.setWheelSteering(2, steering)
+    vehicle.setWheelSteering(3, steering)
 
-    // Rear wheels drive
-    vehicle.setWheelEngineForce(2, engine)
-    vehicle.setWheelEngineForce(3, engine)
+    vehicle.setWheelEngineForce(0, engine)
+    vehicle.setWheelEngineForce(1, engine)
 
-    // Rear wheels brake
     vehicle.setWheelBrake(2, brake)
     vehicle.setWheelBrake(3, brake)
   }

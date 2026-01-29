@@ -72,7 +72,7 @@ export class App {
 
   private update(dt: number) {
     this.physicsWorld.step(dt)
-    this.debugRenderer.update()
+//    this.debugRenderer.update()
 
     for (const u of this.updatables) {
       u.update(dt)

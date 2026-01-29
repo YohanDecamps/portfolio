@@ -1,8 +1,9 @@
 import RAPIER from "@dimforge/rapier3d-compat"
 import * as THREE from 'three'
 import type { PhysicsWorld } from "../physics/physics"
+import type { Updatable } from "./Updatable"
 
-export abstract class RigidBody {
+export class RigidBody implements Updatable {
   readonly body: RAPIER.RigidBody
   protected world: PhysicsWorld
   protected mesh: THREE.Object3D

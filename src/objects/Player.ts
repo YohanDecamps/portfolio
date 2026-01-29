@@ -28,9 +28,10 @@ export class Player extends RigidBody implements Updatable {
         .setCanSleep(false)
     )
 
-    const chassisCollider = RAPIER.ColliderDesc.cuboid(0.528203, 0.254595, 1)
-    const turretCollider = RAPIER.ColliderDesc.cylinder(0.15, 0.5)
-      .setTranslation(0, 0.4, 0)
+    const chassisCollider = RAPIER.ColliderDesc.cuboid(0.45, 0.2, 1)
+    chassisCollider.setTranslation(0, 0.25, 0)
+    const turretCollider = RAPIER.ColliderDesc.cylinder(0.15, 0.4)
+      .setTranslation(0, 0.5, 0.15)
     world.world.createCollider(turretCollider, body)
     world.world.createCollider(chassisCollider, body)
 
@@ -39,10 +40,10 @@ export class Player extends RigidBody implements Updatable {
     this.cameraTarget = new THREE.Object3D()
 
     this.wheels = [
-      this.createWheel(new THREE.Vector3( 0.5, 0, -0.6)),
-      this.createWheel(new THREE.Vector3(-0.5, 0, -0.6)),
-      this.createWheel(new THREE.Vector3( 0.5, 0,  0.6)),
-      this.createWheel(new THREE.Vector3(-0.5, 0,  0.6)),
+      this.createWheel(new THREE.Vector3( 0.4, 0.2, -0.68)),
+      this.createWheel(new THREE.Vector3(-0.4, 0.2, -0.68)),
+      this.createWheel(new THREE.Vector3( 0.4, 0.2,  0.68)),
+      this.createWheel(new THREE.Vector3(-0.4, 0.2,  0.68)),
     ]
     this.wheels.forEach(w => this.object.add(w))
 
@@ -55,19 +56,19 @@ export class Player extends RigidBody implements Updatable {
         wheel.position.clone(),
         suspensionDir,
         axle,
-        0.4,
-        0.1
+        0.2,
+        0.25
       )
       this.vehicle.setWheelSuspensionStiffness(i, 30)
       this.vehicle.setWheelMaxSuspensionTravel(i, 0.3)
       this.vehicle.setWheelFrictionSlip(i, 5)
-      this.vehicle.setWheelSideFrictionStiffness(i, 2)
+      this.vehicle.setWheelSideFrictionStiffness(i, 4)
     })
   }
 
   private createWheel(position: THREE.Vector3): THREE.Mesh {
-    const geometry = new THREE.CylinderGeometry(0.1, 0.1, 0.2, 16)
-    const material = new THREE.MeshStandardMaterial({ color: 0x111188 })
+    const geometry = new THREE.CylinderGeometry(0.15, 0.15, 0.1, 16)
+    const material = new THREE.MeshStandardMaterial({ color: 0x222222 })
     const wheel = new THREE.Mesh(geometry, material)
     
     wheel.position.copy(position)
