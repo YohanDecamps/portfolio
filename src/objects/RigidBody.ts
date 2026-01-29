@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import type { PhysicsWorld } from "../physics/physics"
 
 export abstract class RigidBody {
-  protected body: RAPIER.RigidBody
+  readonly body: RAPIER.RigidBody
   protected world: PhysicsWorld
   protected mesh: THREE.Object3D
 

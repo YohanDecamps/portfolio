@@ -7,21 +7,21 @@ import { FollowCameraController } from './scripts/FollowCameraController'
 import { PlayerMovementController } from './scripts/PlayerMovementController'
 import { PhysicsWorld } from './physics/physics'
 import { Floor } from './objects/Floor'
-
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 const scene = new THREE.Scene()
 
 const camera = new THREE.OrthographicCamera(
-  window.innerWidth / -200,
-  window.innerWidth / 200,
-  window.innerHeight / 200,
-  window.innerHeight / -200,
+  window.innerWidth / -100,
+  window.innerWidth / 100,
+  window.innerHeight / 100,
+  window.innerHeight / -100,
   -1000,
   1000
 )
 
-camera.position.z = 10
-camera.position.y = 10
-camera.position.x = 10
+camera.position.z = 20
+camera.position.y = 20
+camera.position.x = 0
 
 camera.lookAt(0, 0, 0)
 
@@ -47,19 +47,31 @@ window.addEventListener('resize', () => {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 })
 
-const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshStandardMaterial({ color: 0xff5555 })
-const playerMesh = new THREE.Mesh(geometry, material)
-playerMesh.castShadow = true;
+export function loadGLB(url: string): Promise<THREE.Group> {
+  return new Promise((resolve, reject) => {
+    const loader = new GLTFLoader()
+    loader.load(url, gltf => resolve(gltf.scene), undefined, reject)
+  })
+}
 
-const floorGeometry = new THREE.BoxGeometry(10, 0.1, 10)
+const playerModel = await loadGLB('/models/tank.glb')
+
+playerModel.scale.set(1, 1, 1)
+playerModel.traverse(obj => {
+  if ((obj as THREE.Mesh).isMesh) {
+    obj.castShadow = true
+    obj.receiveShadow = true
+  }
+})
+
+const floorGeometry = new THREE.BoxGeometry(100, 0.1, 100)
 const floorMaterial = new THREE.MeshStandardMaterial({ color: 0xFFFFFF })
 const floorMesh = new THREE.Mesh(floorGeometry, floorMaterial)
 floorMesh.receiveShadow = true;
 
 scene.add(floorMesh)
 
-scene.add(playerMesh)
+scene.add(playerModel)
 
 const light = new THREE.DirectionalLight(0xffffff, 1)
 light.position.set(1, 3, 2)
@@ -76,12 +88,14 @@ let input = new InputManager()
 
 let app = new App(renderer, scene, camera, physicsWorld)
 
-let player = new Player(playerMesh, physicsWorld)
+let player = new Player(playerModel, physicsWorld)
 let floor = new Floor(floorMesh, physicsWorld)
 
 let followCamera = new FollowCameraController(camera, player.cameraTarget)
+let playerMovement = new PlayerMovementController(input, player)
 
 app.add(player)
 app.add(floor)
+app.add(playerMovement)
 app.add(followCamera)
 app.start()

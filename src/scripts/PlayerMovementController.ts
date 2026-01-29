@@ -1,26 +1,53 @@
-import * as THREE from 'three'
-import RAPIER from '@dimforge/rapier3d-compat'
 import type { Updatable } from '../objects/Updatable'
 import type { InputManager } from '../InputManager'
+import type { Player } from '../objects/Player'
 
 export class PlayerMovementController implements Updatable {
-  private playerObject: THREE.Object3D
-  private body: RAPIER.RigidBody
-  private world: RAPIER.World
   private input: InputManager
-  private camera: THREE.Camera
+  private player: Player
 
-  constructor(playerObject: THREE.Object3D, input: InputManager, camera: THREE.Camera, world: RAPIER.World
-  ) {
-    this.playerObject = playerObject
+  // --- Tunables ---
+  private engineForce = 2
+  private brakeForce = 10
+  private maxSteering = 0.4
+
+  constructor(input: InputManager, player: Player) {
     this.input = input
-    this.camera = camera
-    this.world = world
-    this.body = world.createRigidBody(RAPIER.RigidBodyDesc.dynamic())
-    const collider = RAPIER.ColliderDesc.capsule(0.5, 1)
-    world.createCollider(collider, this.body)
+    this.player = player
   }
 
-  update(dt: number) {
+  update(_: number) {
+    const vehicle = this.player['vehicle'] // or expose a getter if you prefer
+
+    if (!vehicle) return
+
+    // --- Throttle / brake ---
+    let engine = 0
+    let brake = 0
+
+    if (this.input.isKeyDown('KeyW')) {
+      engine = this.engineForce
+    }
+
+    if (this.input.isKeyDown('KeyS')) {
+      engine = this.engineForce * -1
+    }
+
+    // --- Steering ---
+    let steering = 0
+    if (this.input.isKeyDown('KeyA')) steering = this.maxSteering
+    if (this.input.isKeyDown('KeyD')) steering = -this.maxSteering
+
+    // Front wheels steer
+    vehicle.setWheelSteering(0, steering)
+    vehicle.setWheelSteering(1, steering)
+
+    // Rear wheels drive
+    vehicle.setWheelEngineForce(2, engine)
+    vehicle.setWheelEngineForce(3, engine)
+
+    // Rear wheels brake
+    vehicle.setWheelBrake(2, brake)
+    vehicle.setWheelBrake(3, brake)
   }
 }
