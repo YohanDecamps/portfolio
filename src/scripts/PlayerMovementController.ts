@@ -8,7 +8,7 @@ export class PlayerMovementController implements Updatable {
 
   // --- Tunables ---
   private engineForce = 2
-  private brakeForce = 10
+  private brakeForce = 15
   private maxSteering = 0.4
 
   constructor(input: InputManager, player: Player) {
@@ -31,6 +31,10 @@ export class PlayerMovementController implements Updatable {
 
     if (this.input.isKeyDown('KeyS')) {
       engine = this.engineForce * -1
+    }
+
+    if (this.input.isKeyDown('Space')) {
+      brake = this.brakeForce
     }
 
     // --- Steering ---

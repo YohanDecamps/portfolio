@@ -11,7 +11,7 @@ export class FollowCameraController implements Updatable {
     this.target = target
   }
 
-  private offset = new THREE.Vector3(0, 20, 20)
+  private offset = new THREE.Vector3(20, 20, 20)
   private smoothedPosition = new THREE.Vector3()
 
   update(dt: number) {

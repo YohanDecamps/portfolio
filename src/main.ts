@@ -11,17 +11,17 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 const scene = new THREE.Scene()
 
 const camera = new THREE.OrthographicCamera(
-  window.innerWidth / -100,
-  window.innerWidth / 100,
-  window.innerHeight / 100,
-  window.innerHeight / -100,
+  window.innerWidth / -150,
+  window.innerWidth / 150,
+  window.innerHeight / 150,
+  window.innerHeight / -150,
   -1000,
   1000
 )
 
 camera.position.z = 20
 camera.position.y = 20
-camera.position.x = 0
+camera.position.x = 20
 
 camera.lookAt(0, 0, 0)
 
@@ -37,10 +37,10 @@ window.addEventListener('resize', () => {
   const width = window.innerWidth
   const height = window.innerHeight
 
-  camera.left = width / -200
-  camera.right = width / 200
-  camera.top = height / 200
-  camera.bottom = height / -200
+  camera.left = width / -150
+  camera.right = width / 150
+  camera.top = height / 150
+  camera.bottom = height / -150
   camera.updateProjectionMatrix()
 
   renderer.setSize(width, height)
@@ -61,6 +61,8 @@ playerModel.traverse(obj => {
   if ((obj as THREE.Mesh).isMesh) {
     obj.castShadow = true
     obj.receiveShadow = true
+    // give player model green color
+    ;(obj as THREE.Mesh).material = new THREE.MeshStandardMaterial({ color: 0x4B5320 })
   }
 })
 
@@ -68,6 +70,14 @@ const floorGeometry = new THREE.BoxGeometry(100, 0.1, 100)
 const floorMaterial = new THREE.MeshStandardMaterial({ color: 0xFFFFFF })
 const floorMesh = new THREE.Mesh(floorGeometry, floorMaterial)
 floorMesh.receiveShadow = true;
+// add texture to floor
+const textureLoader = new THREE.TextureLoader()
+const floorTexture = textureLoader.load('/textures/checkerboard.png')
+floorTexture.wrapS = THREE.RepeatWrapping
+floorTexture.wrapT = THREE.RepeatWrapping
+floorTexture.repeat.set(20, 20)
+floorMaterial.map = floorTexture
+floorMaterial.needsUpdate = true
 
 scene.add(floorMesh)
 

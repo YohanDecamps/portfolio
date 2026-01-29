@@ -29,6 +29,9 @@ export class Player extends RigidBody implements Updatable {
     )
 
     const chassisCollider = RAPIER.ColliderDesc.cuboid(0.528203, 0.254595, 1)
+    const turretCollider = RAPIER.ColliderDesc.cylinder(0.15, 0.5)
+      .setTranslation(0, 0.4, 0)
+    world.world.createCollider(turretCollider, body)
     world.world.createCollider(chassisCollider, body)
 
     super(world, body, object)
@@ -36,10 +39,10 @@ export class Player extends RigidBody implements Updatable {
     this.cameraTarget = new THREE.Object3D()
 
     this.wheels = [
-      this.createWheel(new THREE.Vector3( 0.6, -0.1, -0.7)),
-      this.createWheel(new THREE.Vector3(-0.6, -0.1, -0.7)),
-      this.createWheel(new THREE.Vector3( 0.6, -0.1,  0.7)),
-      this.createWheel(new THREE.Vector3(-0.6, -0.1,  0.7)),
+      this.createWheel(new THREE.Vector3( 0.5, 0, -0.6)),
+      this.createWheel(new THREE.Vector3(-0.5, 0, -0.6)),
+      this.createWheel(new THREE.Vector3( 0.5, 0,  0.6)),
+      this.createWheel(new THREE.Vector3(-0.5, 0,  0.6)),
     ]
     this.wheels.forEach(w => this.object.add(w))
 
@@ -57,14 +60,14 @@ export class Player extends RigidBody implements Updatable {
       )
       this.vehicle.setWheelSuspensionStiffness(i, 30)
       this.vehicle.setWheelMaxSuspensionTravel(i, 0.3)
-      this.vehicle.setWheelFrictionSlip(i, 1)
+      this.vehicle.setWheelFrictionSlip(i, 5)
       this.vehicle.setWheelSideFrictionStiffness(i, 2)
     })
   }
 
   private createWheel(position: THREE.Vector3): THREE.Mesh {
     const geometry = new THREE.CylinderGeometry(0.1, 0.1, 0.2, 16)
-    const material = new THREE.MeshStandardMaterial({ color: 0x222222 })
+    const material = new THREE.MeshStandardMaterial({ color: 0x111188 })
     const wheel = new THREE.Mesh(geometry, material)
     
     wheel.position.copy(position)
