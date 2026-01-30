@@ -16,6 +16,7 @@ export class RigidBody implements Updatable {
 
   update(dt: number): void {
     console.log("RigidBody update")
+    if (this.body.isFixed()) return
     this.world.syncMesh(this.mesh, this.body)
   }
 }

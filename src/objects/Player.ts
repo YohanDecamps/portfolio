@@ -62,7 +62,7 @@ export class Player extends RigidBody implements Updatable {
       this.vehicle.setWheelSuspensionStiffness(i, 30)
       this.vehicle.setWheelMaxSuspensionTravel(i, 0.3)
       this.vehicle.setWheelFrictionSlip(i, 5)
-      this.vehicle.setWheelSideFrictionStiffness(i, 4)
+      this.vehicle.setWheelSideFrictionStiffness(i, 7)
     })
   }
 

@@ -7,8 +7,9 @@ export class PlayerMovementController implements Updatable {
   private player: Player
 
   private engineForce = 2
-  private brakeForce = 10
+  private brakeForce = 0.07
   private maxSteering = 0.4
+  private boostForce = 5
 
   constructor(input: InputManager, player: Player) {
     this.input = input
@@ -45,7 +46,7 @@ export class PlayerMovementController implements Updatable {
     vehicle.setWheelEngineForce(0, engine)
     vehicle.setWheelEngineForce(1, engine)
 
-    vehicle.setWheelBrake(2, brake)
-    vehicle.setWheelBrake(3, brake)
+    vehicle.setWheelBrake(0, brake)
+    vehicle.setWheelBrake(1, brake)
   }
 }
