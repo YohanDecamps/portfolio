@@ -1,6 +1,5 @@
 import * as THREE from 'three'
 import type { Updatable } from './objects/Updatable'
-import type { PhysicsWorld } from './physics/physics'
 import RAPIER from '@dimforge/rapier3d-compat'
 
 export class PhysicsDebugRenderer {
@@ -39,7 +38,7 @@ export class App {
   private renderer: THREE.WebGLRenderer
   private scene: THREE.Scene
   private camera: THREE.Camera
-  private physicsWorld: PhysicsWorld
+  private world: RAPIER.World
   
   private updatables: Updatable[] = []
   
@@ -48,13 +47,13 @@ export class App {
     this.updatables.push(updatable)
   }
 
-  constructor(renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.Camera, physicsWorld: PhysicsWorld
+  constructor(renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.Camera, world: RAPIER.World
   ) {
     this.renderer = renderer
     this.scene = scene
     this.camera = camera
-    this.physicsWorld = physicsWorld
-    this.debugRenderer = new PhysicsDebugRenderer(this.scene, this.physicsWorld.world)
+    this.world = world
+    this.debugRenderer = new PhysicsDebugRenderer(this.scene, this.world)
   }
 
   start() {
@@ -71,7 +70,7 @@ export class App {
   }
 
   private update(dt: number) {
-    this.physicsWorld.step(dt)
+    this.world.step()
     this.debugRenderer.update()
 
     for (const u of this.updatables) {

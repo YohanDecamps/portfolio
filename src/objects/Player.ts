@@ -5,7 +5,6 @@ import RAPIER, {
 } from '@dimforge/rapier3d-compat'
 import type { Updatable } from './Updatable'
 import { RigidBody } from './RigidBody'
-import type { PhysicsWorld } from '../physics/physics'
 
 const UP = new THREE.Vector3(0, 1, 0)
 const _steeringQuat = new THREE.Quaternion()
@@ -16,13 +15,15 @@ const _baseRotation = new THREE.Quaternion().setFromAxisAngle(
 )
 
 export class Player extends RigidBody implements Updatable {
-  readonly object: THREE.Object3D
   readonly cameraTarget: THREE.Object3D
+
+  private object: THREE.Object3D
+  private world: RAPIER.World
   private vehicle: DynamicRayCastVehicleController
   private wheels: THREE.Mesh[]
 
-  constructor(object: THREE.Object3D, world: PhysicsWorld) {
-    const body = world.world.createRigidBody(
+  constructor(object: THREE.Object3D, world: RAPIER.World) {
+    const body = world.createRigidBody(
       RigidBodyDesc.dynamic()
         .setTranslation(0, 1, 0)
         .setCanSleep(false)
@@ -30,13 +31,18 @@ export class Player extends RigidBody implements Updatable {
 
     const chassisCollider = RAPIER.ColliderDesc.cuboid(0.45, 0.2, 1)
     chassisCollider.setTranslation(0, 0.25, 0)
+    const bottomCollider = RAPIER.ColliderDesc.cuboid(0.3, 0.05, 1)
+    bottomCollider.setTranslation(0, 0.1, 0)
+    bottomCollider.setMass(6)
     const turretCollider = RAPIER.ColliderDesc.cylinder(0.15, 0.4)
       .setTranslation(0, 0.5, 0.15)
-    world.world.createCollider(turretCollider, body)
-    world.world.createCollider(chassisCollider, body)
+    world.createCollider(turretCollider, body)
+    world.createCollider(bottomCollider, body)
+    world.createCollider(chassisCollider, body)
 
-    super(world, body, object)
+    super(body, object)
     this.object = object
+    this.world = world
     this.cameraTarget = new THREE.Object3D()
 
     this.wheels = [
@@ -47,7 +53,7 @@ export class Player extends RigidBody implements Updatable {
     ]
     this.wheels.forEach(w => this.object.add(w))
 
-    this.vehicle = world.world.createVehicleController(body)
+    this.vehicle = world.createVehicleController(body)
     const suspensionDir = new THREE.Vector3(0, -1, 0)
     const axle = new THREE.Vector3(1, 0, 0)
 
@@ -62,7 +68,7 @@ export class Player extends RigidBody implements Updatable {
       this.vehicle.setWheelSuspensionStiffness(i, 30)
       this.vehicle.setWheelMaxSuspensionTravel(i, 0.3)
       this.vehicle.setWheelFrictionSlip(i, 5)
-      this.vehicle.setWheelSideFrictionStiffness(i, 7)
+      this.vehicle.setWheelSideFrictionStiffness(i, 3)
     })
   }
 
@@ -77,6 +83,7 @@ export class Player extends RigidBody implements Updatable {
   }
 
   update(dt: number): void {
+    dt = Math.min(dt, 0.1)
     this.vehicle.updateVehicle(dt)
 
     this.wheels.forEach((wheel, i) => {
@@ -104,6 +111,6 @@ export class Player extends RigidBody implements Updatable {
   }
 
   dispose() {
-    this.world.world.removeVehicleController(this.vehicle)
+    this.world.removeVehicleController(this.vehicle)
   }
 }

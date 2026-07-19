@@ -1,9 +1,9 @@
 import * as THREE from 'three'
 import { loadGLB } from '../loadGLB'
 import { Player } from '../objects/Player'
-import type { PhysicsWorld } from "../physics/physics";
+import type RAPIER from '@dimforge/rapier3d-compat'
 
-export async function usePlayer(physicsWorld: PhysicsWorld, scene: THREE.Scene): Promise<Player> {
+export async function usePlayer(world: RAPIER.World, scene: THREE.Scene): Promise<Player> {
   const playerModel = await loadGLB('/models/vehicule.glb')
   
   const playerScale = 1
@@ -59,31 +59,25 @@ export async function usePlayer(physicsWorld: PhysicsWorld, scene: THREE.Scene):
   const RRLight = RLLight.clone()
   RRLight.position.set(-0.32, 0.16, -1.02)
   playerModel.add(RRLight)
-  
-  RLLight.visible = false
-  RRLight.visible = false
-  RLLightBulb.visible = false
-  RRLightBulb.visible = false
+
+  RLLight.intensity = 0
+  RRLight.intensity = 0
   
   window.addEventListener('keydown', (event) => {
     if (event.code === 'Space' || event.code === 'KeyS') {
-      RLLight.visible = true
-      RRLight.visible = true
-      RLLightBulb.visible = true
-      RRLightBulb.visible = true
+      RLLight.intensity = 1
+      RRLight.intensity = 1
     }
   })
   
   window.addEventListener('keyup', (event) => {
     if (event.code === 'Space' || event.code === 'KeyS') {
-      RLLight.visible = false
-      RRLight.visible = false
-      RLLightBulb.visible = false
-      RRLightBulb.visible = false
+      RLLight.intensity = 0
+      RRLight.intensity = 0
     }
   })
 
   scene.add(playerModel)
-  let player = new Player(playerModel, physicsWorld)
+  let player = new Player(playerModel, world)
   return player
 }

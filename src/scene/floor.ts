@@ -3,10 +3,9 @@ import * as THREE from 'three'
 import RAPIER from "@dimforge/rapier3d-compat"
 import { Mesh } from "../objects/Mesh";
 import { RigidBody } from "../objects/RigidBody";
-import type { PhysicsWorld } from "../physics/physics";
 
-export function useFloor(physicsWorld: PhysicsWorld, scene: THREE.Scene): GameObject {
-  const floorGeometry = new THREE.BoxGeometry(99999, 0.5, 99999)
+export function useFloor(world: RAPIER.World, scene: THREE.Scene): GameObject {
+  const floorGeometry = new THREE.BoxGeometry(99999, 1, 99999).translate(0, -0.5, 0)
   const floorMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff })
   const floorMesh = new THREE.Mesh(floorGeometry, floorMaterial)
   floorMesh.receiveShadow = true;
@@ -20,11 +19,10 @@ export function useFloor(physicsWorld: PhysicsWorld, scene: THREE.Scene): GameOb
   floorMaterial.normalScale = new THREE.Vector2(1, 1)
   floorMaterial.needsUpdate = true
 
-  
-  let floorBody = physicsWorld.world.createRigidBody(RAPIER.RigidBodyDesc.fixed())
-  const floorCollider = RAPIER.ColliderDesc.cuboid(99999, 0.25, 99999)
-  physicsWorld.world.createCollider(floorCollider, floorBody)
-  const floorRigidBody = new RigidBody(physicsWorld, floorBody, floorMesh)
+  let floorBody = world.createRigidBody(RAPIER.RigidBodyDesc.fixed())
+  const floorCollider = RAPIER.ColliderDesc.cuboid(99999, 0.5, 99999).setTranslation(0, -0.5, 0)
+  world.createCollider(floorCollider, floorBody)
+  const floorRigidBody = new RigidBody(floorBody, floorMesh)
   
   let floor = new GameObject()
   floor.addComponent(floorRigidBody)
