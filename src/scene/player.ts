@@ -64,14 +64,14 @@ export async function usePlayer(world: RAPIER.World, scene: THREE.Scene): Promis
   RRLight.intensity = 0
   
   window.addEventListener('keydown', (event) => {
-    if (event.code === 'Space' || event.code === 'KeyS') {
+    if (event.code === 'Space' || event.code === 'ArrowDown') {
       RLLight.intensity = 1
       RRLight.intensity = 1
     }
   })
   
   window.addEventListener('keyup', (event) => {
-    if (event.code === 'Space' || event.code === 'KeyS') {
+    if (event.code === 'Space' || event.code === 'ArrowDown') {
       RLLight.intensity = 0
       RRLight.intensity = 0
     }
