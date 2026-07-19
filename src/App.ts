@@ -34,6 +34,8 @@ export class PhysicsDebugRenderer {
 
 export class App {
   private clock = new THREE.Clock()
+  private delta: number = 0
+  private frameInterval: number = 1 / 60
 
   private renderer: THREE.WebGLRenderer
   private scene: THREE.Scene
@@ -61,12 +63,15 @@ export class App {
   }
 
   private loop = () => {
-    const delta = this.clock.getDelta()
-
-    this.update(delta)
-    this.render()
-
     requestAnimationFrame(this.loop)
+    this.delta += this.clock.getDelta()
+
+    if (this.delta > this.frameInterval) {
+      this.update(this.delta)
+      this.render()
+
+      this.delta = this.delta % this.frameInterval
+    }
   }
 
   private update(dt: number) {
