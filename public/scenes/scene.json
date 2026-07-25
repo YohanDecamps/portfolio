@@ -1,0 +1,129 @@
+{
+  "gameObjects": [
+    {
+      "name": "ground",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 0,
+              "y": -1,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "RigidBody",
+          "attributes": {
+            "isDynamic": false
+          }
+        },
+        {
+          "type": "BoxCollider",
+          "attributes": {
+            "dimensions": {
+              "x": 100,
+              "y": 1,
+              "z": 100
+            }
+          }
+        },
+        {
+          "type": "Mesh",
+          "attributes": {
+            "meshName": "ground"
+          }
+        }
+      ]
+    },
+    {
+      "name": "cube",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 5,
+              "y": 0,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "RigidBody",
+          "attributes": {
+            "isDynamic": true
+          }
+        },
+        {
+          "type": "BoxCollider",
+          "attributes": {
+            "dimensions": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+            }
+          }
+        },
+        {
+          "type": "Mesh",
+          "attributes": {
+            "meshName": "cube"
+          }
+        }
+      ]
+    },
+    {
+      "name": "vehicle",
+      "components": [
+        {
+          "type": "RigidBody",
+          "attributes": {
+            "isDynamic": true
+          }
+        },
+        {
+          "type": "BoxCollider",
+          "attributes": {
+            "dimensions": {
+              "x": 0.9,
+              "y": 0.4,
+              "z": 2
+            },
+            "position": {
+              "x": 0,
+              "y": 0.25,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "Mesh",
+          "attributes": {
+            "meshName": "vehicle"
+          }
+        },
+        {
+          "type": "VehicleController",
+          "attributes": {
+            "wheels": [
+                {
+"x": 0.4, "y": 0.2, "z": -0.68 },
+                {
+"x": -0.4, "y": 0.2, "z": -0.68 },
+                {
+"x": 0.4, "y": 0.2, "z": 0.68 },
+                {
+"x": -0.4, "y": 0.2, "z": 0.68 }
+            ]
+          }
+        },
+        {
+          "type": "PlayerMovementController",
+          "attributes": {}
+        }
+      ]
+    }
+  ]
+}

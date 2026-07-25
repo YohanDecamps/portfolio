@@ -1,10 +1,11 @@
 import * as THREE from 'three'
 import { Component } from './Component'
 import { Transform } from './Transform'
-import { scene } from '../main'
+import { assetPool, scene } from '../main'
 
 export class Mesh extends Component {
-  public mesh: THREE.Object3D
+  private mesh: THREE.Object3D
+  public meshName: string = ''
   public position: { x: number, y: number, z: number } = { x: 0, y: 0, z: 0 }
   public rotation: { x: number, y: number, z: number, w: number } = { x: 0, y: 0, z: 0, w: 1 }
 
@@ -14,8 +15,13 @@ export class Mesh extends Component {
   }
 
   start(): void {
-    if (this.mesh) {
-        scene.add(this.mesh)
+    if (this.meshName) {
+      this.mesh = assetPool.getModel(this.meshName) || new THREE.Mesh(
+        new THREE.BoxGeometry(1, 1, 1),
+        new THREE.MeshBasicMaterial({ color: 0xff00ff })
+      )
+      this.mesh = this.mesh.clone()
+      scene.add(this.mesh)
     } else {
       this.mesh = new THREE.Mesh(
         new THREE.BoxGeometry(1, 1, 1),

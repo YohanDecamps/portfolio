@@ -1,6 +1,7 @@
 import * as THREE from 'three'
-import { scene, world } from './main'
-import type { GameObject } from './components/GameObject'
+import { scene, world } from '../main'
+import type { GameObject } from '../components/GameObject'
+import { loadScene } from './LoadScene'
 
 export class PhysicsDebugRenderer {
   private geometry: THREE.BufferGeometry
@@ -49,11 +50,25 @@ export class App {
     this.debugRenderer = new PhysicsDebugRenderer()
   }
 
+  public findGameObjectById(id: string): GameObject | null {
+    for (const go of this.gameObjects) {
+      if (go.id === id) {
+        return go
+      }
+    }
+    return null
+  }
+
+  async loadScene(scenePath: string) {
+    const loaded = await loadScene(scenePath)
+    loaded.forEach(go => this.add(go))
+  }
+
   start() {
-    this.loop()
     for (const u of this.gameObjects) {
       u.start()
     }
+    this.loop()
   }
 
   private loop = () => {

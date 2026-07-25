@@ -1,4 +1,4 @@
-import { GameObject } from './GameObject'
+import type { GameObject } from './GameObject'
 
 export abstract class Component {
   protected gameObject: GameObject | null = null

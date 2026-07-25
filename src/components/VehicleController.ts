@@ -1,4 +1,4 @@
-import { world } from "../main"
+import { assetPool, world } from "../main"
 import { Component } from "./Component"
 import { RigidBody } from "./RigidBody"
 import { DynamicRayCastVehicleController } from '@dimforge/rapier3d-compat'
@@ -54,19 +54,19 @@ export class VehicleController extends Component {
 
       this.wheelMeshes = this.wheels.map(wheel => {
         const meshComponent = new Mesh()
-        meshComponent.mesh = this.createWheel(new THREE.Vector3(wheel.x, wheel.y, wheel.z))
+        assetPool.addModel('wheel', this.createWheel())
+        meshComponent.meshName = 'wheel'
         meshComponent.position = { x: wheel.x, y: wheel.y, z: wheel.z }
         this.gameObject?.addComponent(meshComponent)
         return meshComponent
       })
     }
 
-    private createWheel(position: THREE.Vector3): THREE.Mesh {
+    private createWheel(): THREE.Object3D {
       const geometry = new THREE.CylinderGeometry(0.15, 0.15, 0.1, 16)
       const material = new THREE.MeshStandardMaterial({ color: 0x111111 })
       const wheel = new THREE.Mesh(geometry, material)
       
-      wheel.position.copy(position)
       wheel.castShadow = true
       return wheel
     }

@@ -3,7 +3,11 @@ import { Transform } from "./Transform"
 
 export class GameObject {
   private components: Component[] = [new Transform()]
-  public id: number = Math.floor(Math.random() * 1000000)
+  public id: string
+  
+  constructor() {
+    this.id = crypto.randomUUID()
+  }
 
   start(): void {
     for (const component of this.components) {
