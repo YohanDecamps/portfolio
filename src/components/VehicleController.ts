@@ -9,6 +9,7 @@ export class VehicleController extends Component {
     private vehicle: DynamicRayCastVehicleController 
     private wheelsSteering: number[] = []
     private wheelsEngineForce: number[] = []
+    private wheelsBrakeForce: number[] = []
     public wheels: {x: number, y: number, z: number}[] = []
     public wheelMeshes: Mesh[] = []
     public suspensionStiffness: number = 30
@@ -49,6 +50,7 @@ export class VehicleController extends Component {
 
       this.wheelsSteering = new Array(this.wheels.length).fill(0)
       this.wheelsEngineForce = new Array(this.wheels.length).fill(0)
+      this.wheelsBrakeForce = new Array(this.wheels.length).fill(0)
 
       this.wheelMeshes = this.wheels.map(wheel => {
         const meshComponent = new Mesh()
@@ -129,5 +131,12 @@ export class VehicleController extends Component {
         throw new Error(`Wheel index ${wheelIndex} is out of bounds`)
       }
       this.wheelsEngineForce[wheelIndex] = engineForce
+    }
+
+    setWheelBrake(wheelIndex: number, brakeForce: number): void {
+      if (wheelIndex < 0 || wheelIndex >= this.wheels.length) {
+        throw new Error(`Wheel index ${wheelIndex} is out of bounds`)
+      }
+      this.wheelsBrakeForce[wheelIndex] = brakeForce
     }
 }

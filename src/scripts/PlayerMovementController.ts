@@ -1,23 +1,22 @@
-import type { Updatable } from '../objects/Updatable'
-import type { InputManager } from '../InputManager'
-import type { Player } from '../objects/Player'
+import { Component } from '../components/Component'
+import { VehicleController } from '../components/VehicleController'
+import { InputManager } from '../InputManager'
 
-export class PlayerMovementController implements Updatable {
+export class PlayerMovementController extends Component {
   private input: InputManager
-  private player: Player
 
-  private engineForce = 10
-  private brakeForce = 0.7
-  private maxSteering = 0.2
-  private boostForce = 15
+  public engineForce = 2
+  public brakeForce = 0.7
+  public maxSteering = 0.3
+  public boostForce = 15
 
-  constructor(input: InputManager, player: Player) {
-    this.input = input
-    this.player = player
+  constructor() {
+    super()
+    this.input = new InputManager()
   }
 
   update(_: number) {
-    const vehicle = this.player['vehicle']
+    const vehicle = this.gameObject?.getComponent(VehicleController)
 
     if (!vehicle) return
 
@@ -25,11 +24,11 @@ export class PlayerMovementController implements Updatable {
     let brake = 0
 
     if (this.input.isKeyDown('ArrowUp')) {
-      engine = this.engineForce
+      engine = this.engineForce * -1
     }
 
     if (this.input.isKeyDown('ArrowDown')) {
-      engine = this.engineForce * -1
+      engine = this.engineForce * 1
     }
 
     if (this.input.isKeyDown('Space')) {
@@ -42,8 +41,8 @@ export class PlayerMovementController implements Updatable {
     }
 
     let steering = 0
-    if (this.input.isKeyDown('ArrowLeft')) steering = -this.maxSteering
-    if (this.input.isKeyDown('ArrowRight')) steering = this.maxSteering
+    if (this.input.isKeyDown('ArrowLeft')) steering = this.maxSteering
+    if (this.input.isKeyDown('ArrowRight')) steering = -this.maxSteering
 
     vehicle.setWheelSteering(2, steering)
     vehicle.setWheelSteering(3, steering)
