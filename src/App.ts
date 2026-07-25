@@ -1,27 +1,23 @@
 import * as THREE from 'three'
-import type { Updatable } from './objects/Updatable'
-import RAPIER from '@dimforge/rapier3d-compat'
+import { scene, world } from './main'
+import type { GameObject } from './components/GameObject'
 
 export class PhysicsDebugRenderer {
-  private scene: THREE.Scene
-  private world: RAPIER.World
   private geometry: THREE.BufferGeometry
   private material: THREE.LineBasicMaterial
   private mesh: THREE.LineSegments
 
-  constructor(scene: THREE.Scene, world: RAPIER.World) {
-    this.scene = scene
-    this.world = world
+  constructor() {
 
     this.geometry = new THREE.BufferGeometry()
     this.material = new THREE.LineBasicMaterial({ color: 0x00ff00 })
     this.mesh = new THREE.LineSegments(this.geometry, this.material)
 
-    this.scene.add(this.mesh)
+    scene.add(this.mesh)
   }
 
   update() {
-    const debug = this.world.debugRender()
+    const debug = world.debugRender()
 
     this.geometry.setAttribute(
       'position',
@@ -38,28 +34,26 @@ export class App {
   private frameInterval: number = 1 / 60
 
   private renderer: THREE.WebGLRenderer
-  private scene: THREE.Scene
   private camera: THREE.Camera
-  private world: RAPIER.World
   
-  private updatables: Updatable[] = []
+  private gameObjects: GameObject[] = []
   
   private debugRenderer: PhysicsDebugRenderer
-  add(updatable: Updatable) {
-    this.updatables.push(updatable)
+  add(gameObject: GameObject) {
+    this.gameObjects.push(gameObject)
   }
 
-  constructor(renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.Camera, world: RAPIER.World
-  ) {
+  constructor(renderer: THREE.WebGLRenderer, camera: THREE.Camera) {
     this.renderer = renderer
-    this.scene = scene
     this.camera = camera
-    this.world = world
-    this.debugRenderer = new PhysicsDebugRenderer(this.scene, this.world)
+    this.debugRenderer = new PhysicsDebugRenderer()
   }
 
   start() {
     this.loop()
+    for (const u of this.gameObjects) {
+      u.start()
+    }
   }
 
   private loop = () => {
@@ -75,15 +69,15 @@ export class App {
   }
 
   private update(dt: number) {
-    this.world.step()
+    world.step()
     this.debugRenderer.update()
 
-    for (const u of this.updatables) {
+    for (const u of this.gameObjects) {
       u.update(dt)
     }
   }
 
   private render() {
-    this.renderer.render(this.scene, this.camera)
+    this.renderer.render(scene, this.camera)
   }
 }
