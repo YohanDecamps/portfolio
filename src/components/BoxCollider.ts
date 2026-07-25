@@ -7,6 +7,7 @@ export class BoxCollider extends Component {
   private colliderDescription: ColliderDesc
 
   public dimensions: { x: number, y: number, z: number }
+  public position: { x: number, y: number, z: number } = { x: 0, y: 0, z: 0 }
   
   constructor() {
     super()
@@ -16,6 +17,7 @@ export class BoxCollider extends Component {
 
   start(): void {
     this.colliderDescription = ColliderDesc.cuboid(this.dimensions.x / 2, this.dimensions.y / 2, this.dimensions.z / 2)
+    this.colliderDescription.setTranslation(this.position.x, this.position.y, this.position.z)
     
     const rigidBody = this.gameObject?.getComponent(RigidBody)
     if (!rigidBody) {

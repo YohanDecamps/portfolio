@@ -12,6 +12,8 @@ import { Camera } from './components/Camera'
 import { Transform } from './components/Transform'
 import { FollowCamera } from './scripts/FollowCamera'
 import { DirectionalLight } from './components/DirectionalLight'
+import { VehicleController } from './components/VehicleController'
+import { loadGLB } from './loadGLB'
 
 await RAPIER.init()
 export const scene = new THREE.Scene()
@@ -26,30 +28,45 @@ cameraComponent.start()
 const renderer = useRenderer(cameraComponent.getCamera())
 
 let app = new App(renderer, cameraComponent.getCamera())
-
 app.add(camera)
 
-let vehicule: GameObject = new GameObject()
 
-let vehiculeMeshComponent = new Mesh()
-vehiculeMeshComponent.meshPath = '/models/vehicule.glb'
-vehicule.addComponent(vehiculeMeshComponent)
+let vehicle: GameObject = new GameObject()
 
-let vehiculeRigidBodyComponent = new RigidBody()
-vehicule.addComponent(vehiculeRigidBodyComponent)
+let vehicleMeshComponent = new Mesh()
+const vehicleMesh = await loadGLB('/models/vehicule.glb')
+vehicleMeshComponent.mesh = vehicleMesh
+vehicle.addComponent(vehicleMeshComponent)
 
-let vehiculeBoxColliderComponent = new BoxCollider()
-vehiculeBoxColliderComponent.dimensions = {
-  x: 1,
-  y: 1,
+let vehicleRigidBodyComponent = new RigidBody()
+vehicle.addComponent(vehicleRigidBodyComponent)
+
+let vehicleBoxColliderComponent = new BoxCollider()
+vehicleBoxColliderComponent.dimensions = {
+  x: 0.9,
+  y: 0.4,
   z: 2
 }
-vehicule.addComponent(vehiculeBoxColliderComponent)
+vehicleBoxColliderComponent.position = {
+  x: 0,
+  y: 0.25,
+  z: 0
+}
+vehicle.addComponent(vehicleBoxColliderComponent)
 
-app.add(vehicule)
+let vehicleControllerComponent = new VehicleController()
+vehicleControllerComponent.wheels = [
+  { x: 0.4, y: 0.2, z: -0.68 },
+  { x: -0.4, y: 0.2, z: -0.68 },
+  { x: 0.4, y: 0.2, z: 0.68 },
+  { x: -0.4, y: 0.2, z: 0.68 }
+]
+vehicle.addComponent(vehicleControllerComponent)
+
+app.add(vehicle)
 
 let followCameraComponent = new FollowCamera()
-followCameraComponent.target = vehicule.getComponent(Transform)
+followCameraComponent.target = vehicle.getComponent(Transform)
 followCameraComponent.offset = { x: 20, y: 20, z: 20 }
 camera.addComponent(followCameraComponent)
 

@@ -26,8 +26,8 @@ export class RigidBody extends Component {
   }
 
   update(dt: number): void {
-    console.log("RigidBody update")
     if (this.body.isFixed()) return
+
     const pos = this.body.translation()
     const rot = this.body.rotation()
     let transform = this.gameObject?.getComponent(Transform)
