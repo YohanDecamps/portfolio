@@ -14,6 +14,7 @@ import { FollowCamera } from './scripts/FollowCamera'
 import { DirectionalLight } from './components/DirectionalLight'
 import { VehicleController } from './components/VehicleController'
 import { loadGLB } from './loadGLB'
+import { PlayerMovementController } from './scripts/PlayerMovementController'
 
 await RAPIER.init()
 export const scene = new THREE.Scene()
@@ -28,15 +29,10 @@ cameraComponent.start()
 const renderer = useRenderer(cameraComponent.getCamera())
 
 let app = new App(renderer, cameraComponent.getCamera())
+
 app.add(camera)
 
-
 let vehicle: GameObject = new GameObject()
-
-let vehicleMeshComponent = new Mesh()
-const vehicleMesh = await loadGLB('/models/vehicule.glb')
-vehicleMeshComponent.mesh = vehicleMesh
-vehicle.addComponent(vehicleMeshComponent)
 
 let vehicleRigidBodyComponent = new RigidBody()
 vehicle.addComponent(vehicleRigidBodyComponent)
@@ -54,6 +50,11 @@ vehicleBoxColliderComponent.position = {
 }
 vehicle.addComponent(vehicleBoxColliderComponent)
 
+let vehicleMeshComponent = new Mesh()
+const vehicleMesh = await loadGLB('/models/vehicule.glb')
+vehicleMeshComponent.mesh = vehicleMesh
+vehicle.addComponent(vehicleMeshComponent)
+
 let vehicleControllerComponent = new VehicleController()
 vehicleControllerComponent.wheels = [
   { x: 0.4, y: 0.2, z: -0.68 },
@@ -62,6 +63,9 @@ vehicleControllerComponent.wheels = [
   { x: -0.4, y: 0.2, z: 0.68 }
 ]
 vehicle.addComponent(vehicleControllerComponent)
+
+let playerMovementControllerComponent = new PlayerMovementController()
+vehicle.addComponent(playerMovementControllerComponent)
 
 app.add(vehicle)
 
@@ -73,16 +77,20 @@ camera.addComponent(followCameraComponent)
 let ground: GameObject = new GameObject()
 let groundRigidBodyComponent = new RigidBody()
 groundRigidBodyComponent.isDynamic = false
-ground.getComponent(Transform)?.setPosition(0, -3, 0)
+ground.getComponent(Transform)?.setPosition(0, -1, 0)
 ground.addComponent(groundRigidBodyComponent)
 
 let groundBoxColliderComponent = new BoxCollider()
 groundBoxColliderComponent.dimensions = {
-  x: 10,
+  x: 100,
   y: 1,
-  z: 10
+  z: 100
 }
 ground.addComponent(groundBoxColliderComponent)
+
+let groundMeshComponent = new Mesh()
+groundMeshComponent.mesh = await loadGLB('/models/ground.glb')
+ground.addComponent(groundMeshComponent)
 
 app.add(ground)
 
