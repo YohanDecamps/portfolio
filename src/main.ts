@@ -4,10 +4,8 @@ import { App } from './engine/App'
 import { useRenderer } from './scene/renderer'
 import RAPIER from '@dimforge/rapier3d-compat'
 import { GameObject } from './components/GameObject'
-import { AmbientLight } from './components/AmbientLight'
 import { Camera } from './components/Camera'
 import { Transform } from './components/Transform'
-import { DirectionalLight } from './components/DirectionalLight'
 import { AssetPool } from './engine/AssetPool'
 import { FollowCamera } from './scripts/FollowCamera'
 
@@ -37,18 +35,5 @@ let followCameraComponent = new FollowCamera()
 followCameraComponent.target = app.findGameObjectById('vehicle')?.getComponent(Transform) || null
 followCameraComponent.offset = { x: 20, y: 20, z: 20 }
 camera.addComponent(followCameraComponent)
-
-let ambientLight: GameObject = new GameObject()
-let ambientLightComponent = new AmbientLight()
-ambientLightComponent.intensity = 3
-ambientLight.addComponent(ambientLightComponent)
-app.add(ambientLight)
- 
-let directionalLight: GameObject = new GameObject()
-let directionalLightComponent = new DirectionalLight()
-directionalLightComponent.intensity = 3
-directionalLight.getComponent(Transform)?.setPosition(10, 10, 10)
-directionalLight.addComponent(directionalLightComponent)
-app.add(directionalLight)
 
 app.start()

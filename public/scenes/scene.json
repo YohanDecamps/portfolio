@@ -108,20 +108,48 @@
           "type": "VehicleController",
           "attributes": {
             "wheels": [
-                {
-"x": 0.4, "y": 0.2, "z": -0.68 },
-                {
-"x": -0.4, "y": 0.2, "z": -0.68 },
-                {
-"x": 0.4, "y": 0.2, "z": 0.68 },
-                {
-"x": -0.4, "y": 0.2, "z": 0.68 }
+                { "x": 0.4, "y": 0.2, "z": -0.68 },
+                { "x": -0.4, "y": 0.2, "z": -0.68 },
+                { "x": 0.4, "y": 0.2, "z": 0.68 },
+                { "x": -0.4, "y": 0.2, "z": 0.68 }
             ]
           }
         },
         {
           "type": "PlayerMovementController",
           "attributes": {}
+        }
+      ]
+    },
+    {
+      "name": "ambientLight",
+      "components": [
+        {
+          "type": "AmbientLight",
+          "attributes": {
+            "intensity": 3
+          }
+        }
+      ]
+    },
+    {
+      "name": "directionalLight",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 20,
+              "y": 30,
+              "z": 10
+            }
+          }
+        },
+        {
+          "type": "DirectionalLight",
+          "attributes": {
+            "intensity": 3
+          }
         }
       ]
     }
