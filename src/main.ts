@@ -13,7 +13,7 @@ import { Transform } from './components/Transform'
 import { FollowCamera } from './scripts/FollowCamera'
 import { DirectionalLight } from './components/DirectionalLight'
 import { VehicleController } from './components/VehicleController'
-import { loadGLB } from './loadGLB'
+import { loadGLB } from './lib/loadGLB'
 import { PlayerMovementController } from './scripts/PlayerMovementController'
 
 await RAPIER.init()

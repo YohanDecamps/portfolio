@@ -1,6 +1,6 @@
 import { Component } from '../components/Component'
 import { VehicleController } from '../components/VehicleController'
-import { InputManager } from '../InputManager'
+import { InputManager } from '../lib/InputManager'
 
 export class PlayerMovementController extends Component {
   private input: InputManager
