@@ -62,6 +62,7 @@ export function loadGameObject(gameObjectData: any): GameObject {
         const componentClass = componentTypeMap[componentData.type]
         if (componentClass) {
             component = new componentClass()
+            gameObject.addComponent(component)
         } else {
             console.warn(`Unknown component type: ${componentData.type}`)
         }
@@ -70,7 +71,6 @@ export function loadGameObject(gameObjectData: any): GameObject {
       if (componentData.attributes) {
         applyAttributes(component, componentData.attributes)
       }
-      gameObject.addComponent(component)
     }
   }
 
