@@ -5,7 +5,7 @@ export function useRenderer(camera: THREE.Camera): THREE.WebGLRenderer {
   renderer.setSize(window.innerWidth, window.innerHeight)
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFShadowMap
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap
   
   document.body.appendChild(renderer.domElement)
   renderer.domElement.style.display = 'block'

@@ -2,6 +2,7 @@
   "prefabs": [
     {
       "id": "vehicle",
+      "tags": ["player"],
       "$ref": "vehicle.json"
     },
     {
@@ -79,7 +80,22 @@
         {
           "type": "DirectionalLight",
           "attributes": {
-            "intensity": 3
+            "intensity": 3,
+            "direction": {
+              "x": -20,
+              "y": -30,
+              "z": -10
+            }
+          }
+        },
+        {
+          "type": "FollowPlayer",
+          "attributes": {
+            "offset": {
+              "x": 20,
+              "y": 30,
+              "z": 10
+            }
           }
         }
       ]

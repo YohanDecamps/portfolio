@@ -19,17 +19,25 @@ export class Mesh extends Component {
     if (this.meshName) {
       this.mesh = assetPool.getModel(this.meshName) || new THREE.Mesh(
         new THREE.BoxGeometry(1, 1, 1),
-        new THREE.MeshBasicMaterial({ color: 0xff00ff })
+        new THREE.MeshPhongMaterial({ color: 0xff00ff })
       )
       this.mesh = this.mesh.clone()
+      this.mesh.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          child.castShadow = true
+          child.receiveShadow = true
+        }
+      })
       scene.add(this.mesh)
     } else {
       this.mesh = new THREE.Mesh(
         new THREE.BoxGeometry(1, 1, 1),
-        new THREE.MeshBasicMaterial({ color: 0xff00ff })
+        new THREE.MeshPhongMaterial({ color: 0xff00ff })
       )
       scene.add(this.mesh)
     }
+    this.mesh.receiveShadow = true
+    this.mesh.castShadow = true
   }
 
   update(dt: number): void {

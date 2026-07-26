@@ -7,7 +7,8 @@ import { GameObject } from './components/GameObject'
 import { Camera } from './components/Camera'
 import { Transform } from './components/Transform'
 import { AssetPool } from './engine/AssetPool'
-import { FollowCamera } from './scripts/FollowCamera'
+import { LookAtPlayer } from './scripts/LookAtPlayer'
+import { FollowPlayer } from './scripts/FollowPlayer'
 
 await RAPIER.init()
 export const scene = new THREE.Scene()
@@ -31,9 +32,11 @@ app.add(camera)
 
 await app.loadScene('/scenes/scene.json')
 
-let followCameraComponent = new FollowCamera()
-followCameraComponent.target = app.findGameObjectById('player')?.getComponent(Transform) || null
-followCameraComponent.offset = { x: 20, y: 20, z: 20 }
-camera.addComponent(followCameraComponent)
+let lookAtPlayerComponent = new LookAtPlayer()
+lookAtPlayerComponent.offset = { x: 20, y: 20, z: 20 }
+camera.addComponent(lookAtPlayerComponent)
+let followPlayerComponent = new FollowPlayer()
+followPlayerComponent.offset = { x: 20, y: 20, z: 20 }
+camera.addComponent(followPlayerComponent)
 
 app.start()

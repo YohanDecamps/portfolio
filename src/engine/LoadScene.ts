@@ -12,7 +12,8 @@ import { Transform } from "../components/Transform"
 import { VehicleController } from "../components/VehicleController"
 import { assetPool } from "../main"
 import { BowlingPin } from "../scripts/BowlingPin"
-import { FollowCamera } from "../scripts/FollowCamera"
+import { LookAtPlayer } from "../scripts/LookAtPlayer"
+import { FollowPlayer } from "../scripts/FollowPlayer"
 import { PlayerMovementController } from "../scripts/PlayerMovementController"
 
 function applyAttributes(target: any, attributes: Record<string, unknown>) {
@@ -47,9 +48,10 @@ const componentTypeMap: Record<string, new () => Component> = {
   'AmbientLight': AmbientLight,
   'DirectionalLight': DirectionalLight,
   'VehicleController': VehicleController,
-  'FollowCamera': FollowCamera,
+  'LookAtPlayer': LookAtPlayer,
   'PlayerMovementController': PlayerMovementController,
-  'BowlingPin': BowlingPin
+  'BowlingPin': BowlingPin,
+  'FollowPlayer': FollowPlayer
 }
 
 const jsonCache = new Map<string, Promise<any>>()
