@@ -9,6 +9,17 @@ export class GameObject {
     this.id = crypto.randomUUID()
   }
 
+  clone(): GameObject {
+    const newGameObject = new GameObject()
+    newGameObject.id = this.id // Keep the same ID for the clone
+    for (const component of this.components) {
+      const clonedComponent = Object.create(Object.getPrototypeOf(component))
+      Object.assign(clonedComponent, component)
+      newGameObject.addComponent(clonedComponent)
+    }
+    return newGameObject
+  }
+
   start(): void {
     for (const component of this.components) {
       component.start()

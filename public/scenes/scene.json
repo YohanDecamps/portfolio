@@ -1,7 +1,46 @@
 {
+  "prefabs": [
+    {
+      "id": "cube",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "RigidBody",
+          "attributes": {
+            "isDynamic": true
+          }
+        },
+        {
+          "type": "BoxCollider",
+          "attributes": {
+            "dimensions": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+            }
+          }
+        },
+        {
+          "type": "Mesh",
+          "attributes": {
+            "meshName": "cube"
+          }
+        }
+      ]
+    }
+  ],
   "gameObjects": [
     {
-      "name": "ground",
+      "id": "ground",
       "components": [
         {
           "type": "Transform",
@@ -38,44 +77,7 @@
       ]
     },
     {
-      "name": "cube",
-      "components": [
-        {
-          "type": "Transform",
-          "attributes": {
-            "position": {
-              "x": 5,
-              "y": 0,
-              "z": 0
-            }
-          }
-        },
-        {
-          "type": "RigidBody",
-          "attributes": {
-            "isDynamic": true
-          }
-        },
-        {
-          "type": "BoxCollider",
-          "attributes": {
-            "dimensions": {
-              "x": 1,
-              "y": 1,
-              "z": 1
-            }
-          }
-        },
-        {
-          "type": "Mesh",
-          "attributes": {
-            "meshName": "cube"
-          }
-        }
-      ]
-    },
-    {
-      "name": "vehicle",
+      "id": "vehicle",
       "components": [
         {
           "type": "RigidBody",
@@ -122,7 +124,7 @@
       ]
     },
     {
-      "name": "ambientLight",
+      "id": "ambientLight",
       "components": [
         {
           "type": "AmbientLight",
@@ -133,7 +135,7 @@
       ]
     },
     {
-      "name": "directionalLight",
+      "id": "directionalLight",
       "components": [
         {
           "type": "Transform",
@@ -152,6 +154,39 @@
           }
         }
       ]
+    },
+    {
+      "id": "cube1",
+      "prefab": "cube",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 5,
+              "y": 0,
+              "z": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cube2",
+      "prefab": "cube",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": -5,
+              "y": 0,
+              "z": 0
+            }
+          }
+        }
+      ]
     }
+
   ]
 }

@@ -8,12 +8,10 @@ import { Mesh } from "../components/Mesh"
 import { RigidBody } from "../components/RigidBody"
 import { Transform } from "../components/Transform"
 import { VehicleController } from "../components/VehicleController"
+import { assetPool } from "../main"
 import { FollowCamera } from "../scripts/FollowCamera"
 import { PlayerMovementController } from "../scripts/PlayerMovementController"
 
-// Recursively merge plain-object attributes onto a component instance,
-// instead of blindly overwriting nested objects by reference.
-// This preserves any default sub-fields that aren't present in the scene data.
 function applyAttributes(target: any, attributes: Record<string, unknown>) {
   for (const key of Object.keys(attributes)) {
     const value = attributes[key]
@@ -23,8 +21,6 @@ function applyAttributes(target: any, attributes: Record<string, unknown>) {
       isPlainObject(value) &&
       isPlainObject(existing)
     ) {
-      // Merge into the existing nested object instead of replacing it,
-      // so untouched sub-properties keep their defaults.
       applyAttributes(existing, value as Record<string, unknown>)
     } else {
       console.log(`Setting ${target.constructor.name}.${key} =`, value)
@@ -37,6 +33,46 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value)
 }
 
+const componentTypeMap: Record<string, new () => Component> = {
+  'Transform': Transform,
+  'Mesh': Mesh,
+  'RigidBody': RigidBody,
+  'BoxCollider': BoxCollider,
+  'Camera': Camera,
+  'AmbientLight': AmbientLight,
+  'DirectionalLight': DirectionalLight,
+  'VehicleController': VehicleController,
+  'FollowCamera': FollowCamera,
+  'PlayerMovementController': PlayerMovementController
+}
+
+export function loadGameObject(gameObjectData: any): GameObject {
+  const gameObject = new GameObject()
+  gameObject.id = gameObjectData.id
+
+  for (const componentData of gameObjectData.components) {
+    let component: Component | null = null
+    if (componentData.type === 'Transform') {
+        component = gameObject.getComponent(Transform)
+    } else {
+        const componentClass = componentTypeMap[componentData.type]
+        if (componentClass) {
+            component = new componentClass()
+        } else {
+            console.warn(`Unknown component type: ${componentData.type}`)
+        }
+    }
+    if (component) {
+      if (componentData.attributes) {
+        applyAttributes(component, componentData.attributes)
+      }
+      gameObject.addComponent(component)
+    }
+  }
+
+  return gameObject
+}
+
 export async function loadScene(scenePath: string): Promise<GameObject[]> {
   const gameObjects: GameObject[] = []
 
@@ -46,54 +82,36 @@ export async function loadScene(scenePath: string): Promise<GameObject[]> {
   }
   const sceneData = await response.json()
 
-  for (const gameObjectData of sceneData.gameObjects) {
-    console.log(`Loading game object: ${gameObjectData.name}`)
-    const gameObject = new GameObject()
-    gameObject.id = gameObjectData.name
+  for (const prefabData of sceneData.prefabs) {
+    console.log(`Loading prefab: ${prefabData.id}`)
+    const prefab: GameObject = loadGameObject(prefabData)
+    assetPool.addPrefab(prefabData.id, prefab)
+  }
 
-    for (const componentData of gameObjectData.components) {
-      let component: Component | null = null
-      switch (componentData.type) {
-        case 'Transform':
-          component = gameObject.getComponent(Transform)
-          break
-        case 'Mesh':
-          component = new Mesh()
-          break
-        case 'RigidBody':
-          component = new RigidBody()
-          break
-        case 'BoxCollider':
-          component = new BoxCollider()
-          break
-        case 'Camera':
-          component = new Camera()
-          break
-        case 'AmbientLight':
-          component = new AmbientLight()
-          break
-        case 'DirectionalLight':
-          component = new DirectionalLight()
-          break
-        case 'VehicleController':
-          component = new VehicleController()
-          break
-        case 'FollowCamera':
-          component = new FollowCamera()
-          break
-        case 'PlayerMovementController':
-          component = new PlayerMovementController()
-          break
-        default:
-          console.warn(`Unknown component type: ${componentData.type}`)
+  for (const gameObjectData of sceneData.gameObjects) {
+    console.log(`Loading game object: ${gameObjectData.id}`)
+    if (gameObjectData.prefab) {
+      const prefab = assetPool.getPrefab(gameObjectData.prefab)
+      if (!prefab) {
+        console.warn(`Prefab not found: ${gameObjectData.prefab}`)
+        continue
       }
-      if (component) {
-        if (componentData.attributes) {
-          applyAttributes(component, componentData.attributes)
+      const gameObject = prefab.clone()
+      gameObject.id = gameObjectData.id
+      if (gameObjectData.components) {
+        for (const componentData of gameObjectData.components) {
+          const existingComponent = gameObject.getComponent(componentTypeMap[componentData.type])
+          if (existingComponent) {
+            applyAttributes(existingComponent, componentData.attributes || {})
+          } else {
+            console.warn(`Component type ${componentData.type} not found on prefab ${gameObjectData.prefab}`)
+          }
         }
-        gameObject.addComponent(component)
       }
+      gameObjects.push(gameObject)
+      continue
     }
+    const gameObject = loadGameObject(gameObjectData);
     gameObjects.push(gameObject)
   }
 
