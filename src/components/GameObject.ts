@@ -3,6 +3,7 @@ import { Transform } from "./Transform"
 
 export class GameObject {
   private components: Component[] = [new Transform()]
+  public tags: string[] = []
   public id: string
   
   constructor() {
@@ -12,6 +13,7 @@ export class GameObject {
   clone(): GameObject {
     const newGameObject = new GameObject()
     newGameObject.id = this.id // Keep the same ID for the clone
+    newGameObject.tags = [...this.tags]
     for (const component of this.components) {
       const clonedComponent = Object.create(Object.getPrototypeOf(component))
       Object.assign(clonedComponent, component)

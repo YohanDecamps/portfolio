@@ -45,4 +45,31 @@ export class RigidBody extends Component {
   getBody(): RAPIER.RigidBody {
     return this.body
   }
+  
+  getColliders(): RAPIER.Collider[] {
+    const colliders: RAPIER.Collider[] = []
+
+    for (let i = 0; i < this.body.numColliders(); i++) {
+      const collider = this.body.collider(i)
+      if (collider) {
+        colliders.push(collider)
+      }
+    }
+
+    return colliders
+  }
+
+  isCollidingWith(other: RigidBody): boolean {
+    const collidersA = this.getColliders()
+    const collidersB = other.getColliders()
+
+    for (const colliderA of collidersA) {
+      for (const colliderB of collidersB) {
+        if (colliderA.contactCollider(colliderB, 0.01)) {
+          return true
+        }
+      }
+    }
+    return false
+  }
 }

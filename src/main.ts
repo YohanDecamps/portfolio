@@ -24,7 +24,7 @@ cameraComponent.start()
 
 const renderer = useRenderer(cameraComponent.getCamera())
 
-let app = new App(renderer, cameraComponent.getCamera())
+export let app = new App(renderer, cameraComponent.getCamera())
 
 cameraComponent.lookAt(0, 0, 0)
 app.add(camera)

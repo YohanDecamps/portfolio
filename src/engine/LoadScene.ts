@@ -11,6 +11,7 @@ import { RigidBody } from "../components/RigidBody"
 import { Transform } from "../components/Transform"
 import { VehicleController } from "../components/VehicleController"
 import { assetPool } from "../main"
+import { BowlingPin } from "../scripts/BowlingPin"
 import { FollowCamera } from "../scripts/FollowCamera"
 import { PlayerMovementController } from "../scripts/PlayerMovementController"
 
@@ -47,7 +48,8 @@ const componentTypeMap: Record<string, new () => Component> = {
   'DirectionalLight': DirectionalLight,
   'VehicleController': VehicleController,
   'FollowCamera': FollowCamera,
-  'PlayerMovementController': PlayerMovementController
+  'PlayerMovementController': PlayerMovementController,
+  'BowlingPin': BowlingPin
 }
 
 const jsonCache = new Map<string, Promise<any>>()
@@ -97,6 +99,10 @@ async function resolveEntry(entry: any, basePath: string, seen: Set<string> = ne
 export function loadGameObject(gameObjectData: any): GameObject {
   const gameObject = new GameObject()
   gameObject.id = gameObjectData.id
+  if (gameObjectData.tags) {
+    console.log(`GameObject ${gameObject.id} tags: ${gameObject.tags.join(', ')}`)
+    gameObject.tags = gameObjectData.tags
+  }
 
   for (const componentData of gameObjectData.components) {
     let component: Component | null = null
@@ -145,6 +151,9 @@ export async function loadScene(scenePath: string): Promise<GameObject[]> {
       }
       const gameObject = prefab.clone()
       gameObject.id = resolvedGameObjectData.id
+      if (resolvedGameObjectData.tags) {
+        gameObject.tags = resolvedGameObjectData.tags
+      }
       if (resolvedGameObjectData.components) {
         for (const componentData of resolvedGameObjectData.components) {
           const existingComponent = gameObject.getComponent(componentTypeMap[componentData.type])

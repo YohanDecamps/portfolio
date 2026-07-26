@@ -59,6 +59,10 @@ export class App {
     return null
   }
 
+  public findGameObjectsByTag(tag: string): GameObject[] {
+    return this.gameObjects.filter(go => go.tags.includes(tag))
+  }
+
   async loadScene(scenePath: string) {
     const loaded = await loadScene(scenePath)
     loaded.forEach(go => this.add(go))
