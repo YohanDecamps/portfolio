@@ -50,6 +50,50 @@ const componentTypeMap: Record<string, new () => Component> = {
   'PlayerMovementController': PlayerMovementController
 }
 
+const jsonCache = new Map<string, Promise<any>>()
+
+async function fetchJson(url: string): Promise<any> {
+  let pending = jsonCache.get(url)
+  if (!pending) {
+    pending = fetch(url).then(async (response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status} while fetching ${url}`)
+      }
+      const text = await response.text()
+      if (!text.trim()) {
+        throw new Error(`Empty response body when fetching ${url} (check the file exists and isn't blank)`)
+      }
+      try {
+        return JSON.parse(text)
+      } catch (err) {
+        throw new Error(`Invalid JSON in ${url}: ${(err as Error).message}\nBody started with: ${text.slice(0, 100)}`)
+      }
+    })
+    jsonCache.set(url, pending)
+  }
+  return pending
+}
+
+function resolveUrl(basePath: string, relativePath: string): string {
+  return new URL(relativePath, new URL(basePath, window.location.href)).toString()
+}
+
+async function resolveEntry(entry: any, basePath: string, seen: Set<string> = new Set()): Promise<any> {
+  if (!entry?.$ref) return entry
+
+  const refUrl = resolveUrl(basePath, entry.$ref)
+  if (seen.has(refUrl)) {
+    throw new Error(`Circular $ref detected while resolving: ${refUrl}`)
+  }
+  seen.add(refUrl)
+
+  const refData = await fetchJson(refUrl)
+  const resolvedRefData = await resolveEntry(refData, refUrl, seen)
+
+  const { $ref, ...localFields } = entry
+  return { ...resolvedRefData, ...localFields }
+}
+
 export function loadGameObject(gameObjectData: any): GameObject {
   const gameObject = new GameObject()
   gameObject.id = gameObjectData.id
@@ -80,42 +124,42 @@ export function loadGameObject(gameObjectData: any): GameObject {
 export async function loadScene(scenePath: string): Promise<GameObject[]> {
   const gameObjects: GameObject[] = []
 
-  const response = await fetch(scenePath)
-  if (!response.ok) {
-    throw new Error(`HTTP ${response.status} while fetching ${scenePath}`)
-  }
-  const sceneData = await response.json()
+  const sceneData = await fetchJson(scenePath)
 
-  for (const prefabData of sceneData.prefabs) {
-    console.log(`Loading prefab: ${prefabData.id}`)
-    const prefab: GameObject = loadGameObject(prefabData)
-    assetPool.addPrefab(prefabData.id, prefab)
+  for (const prefabData of sceneData.prefabs ?? []) {
+    const resolvedPrefabData = await resolveEntry(prefabData, scenePath)
+    console.log(`Loading prefab: ${resolvedPrefabData.id}`)
+    const prefab: GameObject = loadGameObject(resolvedPrefabData)
+    assetPool.addPrefab(resolvedPrefabData.id, prefab)
   }
 
   for (const gameObjectData of sceneData.gameObjects) {
-    console.log(`Loading game object: ${gameObjectData.id}`)
-    if (gameObjectData.prefab) {
-      const prefab = assetPool.getPrefab(gameObjectData.prefab)
+    const resolvedGameObjectData = await resolveEntry(gameObjectData, scenePath)
+    console.log(`Loading game object: ${resolvedGameObjectData.id}`)
+
+    if (resolvedGameObjectData.prefab) {
+      const prefab = assetPool.getPrefab(resolvedGameObjectData.prefab)
       if (!prefab) {
-        console.warn(`Prefab not found: ${gameObjectData.prefab}`)
+        console.warn(`Prefab not found: ${resolvedGameObjectData.prefab}`)
         continue
       }
       const gameObject = prefab.clone()
-      gameObject.id = gameObjectData.id
-      if (gameObjectData.components) {
-        for (const componentData of gameObjectData.components) {
+      gameObject.id = resolvedGameObjectData.id
+      if (resolvedGameObjectData.components) {
+        for (const componentData of resolvedGameObjectData.components) {
           const existingComponent = gameObject.getComponent(componentTypeMap[componentData.type])
           if (existingComponent) {
             applyAttributes(existingComponent, componentData.attributes || {})
           } else {
-            console.warn(`Component type ${componentData.type} not found on prefab ${gameObjectData.prefab}`)
+            console.warn(`Component type ${componentData.type} not found on prefab ${resolvedGameObjectData.prefab}`)
           }
         }
       }
       gameObjects.push(gameObject)
       continue
     }
-    const gameObject = loadGameObject(gameObjectData);
+
+    const gameObject = loadGameObject(resolvedGameObjectData)
     gameObjects.push(gameObject)
   }
 

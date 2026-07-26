@@ -32,7 +32,7 @@ app.add(camera)
 await app.loadScene('/scenes/scene.json')
 
 let followCameraComponent = new FollowCamera()
-followCameraComponent.target = app.findGameObjectById('vehicle')?.getComponent(Transform) || null
+followCameraComponent.target = app.findGameObjectById('player')?.getComponent(Transform) || null
 followCameraComponent.offset = { x: 20, y: 20, z: 20 }
 camera.addComponent(followCameraComponent)
 
