@@ -26,5 +26,6 @@ export class AssetPool {
     this.addModel('ground', await loadGLB('models/ground.glb'))
     this.addModel('vehicle', await loadGLB('models/vehicle.glb'))
     this.addModel('cube', await loadGLB('models/cube.glb'))
+    this.addModel('bowling-pin', await loadGLB('models/bowling-pin.glb'))
   }
 }

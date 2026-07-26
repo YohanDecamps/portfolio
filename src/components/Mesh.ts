@@ -8,6 +8,7 @@ export class Mesh extends Component {
   public meshName: string = ''
   public position: { x: number, y: number, z: number } = { x: 0, y: 0, z: 0 }
   public rotation: { x: number, y: number, z: number, w: number } = { x: 0, y: 0, z: 0, w: 1 }
+  public scale: { x: number, y: number, z: number } = { x: 1, y: 1, z: 1 }
 
   constructor() {
     super()
@@ -59,6 +60,7 @@ export class Mesh extends Component {
       this.rotation.w
     )
     this.mesh.quaternion.copy(transformRotation.clone().multiply(additionalRotation))
+    this.mesh.scale.set(this.scale.x, this.scale.y, this.scale.z)
   }
   }
 }

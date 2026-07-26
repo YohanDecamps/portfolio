@@ -1,7 +1,9 @@
 import { AmbientLight } from "../components/AmbientLight"
 import { BoxCollider } from "../components/BoxCollider"
 import { Camera } from "../components/Camera"
+import { CapsuleCollider } from "../components/CapsuleCollider"
 import type { Component } from "../components/Component"
+import { CylinderCollider } from "../components/CylinderCollider"
 import { DirectionalLight } from "../components/DirectionalLight"
 import { GameObject } from "../components/GameObject"
 import { Mesh } from "../components/Mesh"
@@ -38,6 +40,8 @@ const componentTypeMap: Record<string, new () => Component> = {
   'Mesh': Mesh,
   'RigidBody': RigidBody,
   'BoxCollider': BoxCollider,
+  'CapsuleCollider': CapsuleCollider,
+  'CylinderCollider': CylinderCollider,
   'Camera': Camera,
   'AmbientLight': AmbientLight,
   'DirectionalLight': DirectionalLight,
