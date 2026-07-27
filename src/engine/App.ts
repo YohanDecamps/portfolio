@@ -89,7 +89,7 @@ export class App {
 
   private update(dt: number) {
     world.step()
-    this.debugRenderer.update()
+    //this.debugRenderer.update()
 
     for (const u of this.gameObjects) {
       u.update(dt)
