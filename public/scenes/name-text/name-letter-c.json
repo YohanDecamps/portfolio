@@ -1,0 +1,42 @@
+{
+  "components": [
+    {
+      "type": "RigidBody",
+      "attributes": {
+        "isDynamic": true
+      }
+    },
+    {
+      "type": "BoxCollider",
+      "attributes": {
+        "dimensions": {
+          "x": 0.3,
+          "y": 0.1,
+          "z": 0.41
+        },
+        "position": {
+          "x": 0,
+          "y": -0.5,
+          "z": 0
+        }
+      }
+    },
+    {
+      "type": "ConvexMeshCollider",
+      "attributes": {
+        "meshName": "name-text-c-collider",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    },
+    {
+      "type": "Mesh",
+      "attributes": {
+        "meshName": "name-text-c"
+      }
+    }
+  ]
+}

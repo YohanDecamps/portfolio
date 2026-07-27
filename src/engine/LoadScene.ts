@@ -15,6 +15,7 @@ import { BowlingPin } from "../scripts/BowlingPin"
 import { LookAtPlayer } from "../scripts/LookAtPlayer"
 import { FollowPlayer } from "../scripts/FollowPlayer"
 import { PlayerMovementController } from "../scripts/PlayerMovementController"
+import { ConvexMeshCollider } from "../components/ConvexMeshCollider"
 
 function applyAttributes(target: any, attributes: Record<string, unknown>) {
   for (const key of Object.keys(attributes)) {
@@ -43,6 +44,7 @@ const componentTypeMap: Record<string, new () => Component> = {
   'RigidBody': RigidBody,
   'BoxCollider': BoxCollider,
   'CapsuleCollider': CapsuleCollider,
+  'ConvexMeshCollider': ConvexMeshCollider,
   'CylinderCollider': CylinderCollider,
   'Camera': Camera,
   'AmbientLight': AmbientLight,

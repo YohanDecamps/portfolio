@@ -1,0 +1,27 @@
+{
+  "components": [
+    {
+      "type": "RigidBody",
+      "attributes": {
+        "isDynamic": true
+      }
+    },
+    {
+      "type": "ConvexMeshCollider",
+      "attributes": {
+        "meshName": "name-text-e-collider",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    },
+    {
+      "type": "Mesh",
+      "attributes": {
+        "meshName": "name-text-e"
+      }
+    }
+  ]
+}
