@@ -4,6 +4,7 @@ import { Component } from './Component';
 
 export class AmbientLight extends Component {
   private light: THREE.AmbientLight
+  public color: number = 0xffffff
   public intensity: number = 1
 
   constructor() {
@@ -12,7 +13,7 @@ export class AmbientLight extends Component {
   }
 
   start(): void {
-    this.light = new THREE.AmbientLight(0xffffff, this.intensity)
+    this.light = new THREE.AmbientLight(this.color, this.intensity)
     scene.add(this.light)
   }
 

@@ -6,6 +6,7 @@ import { Transform } from './Transform';
 export class DirectionalLight extends Component {
   private light: THREE.DirectionalLight
   public intensity: number = 1
+  public color: number = 0xffffff
   public castShadow: boolean = true
   public direction: { x: number, y: number, z: number } = { x: 0, y: -1, z: 0 }
 
@@ -15,7 +16,7 @@ export class DirectionalLight extends Component {
   }
 
   start(): void {
-    this.light = new THREE.DirectionalLight(0xffffff, this.intensity)
+    this.light = new THREE.DirectionalLight(this.color, this.intensity)
 
     const transform = this.gameObject?.getComponent(Transform)
     if (transform) {

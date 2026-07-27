@@ -26,6 +26,7 @@ export class AssetPool {
     this.addModel('ground', await loadGLB('models/ground.glb'))
     this.addModel('vehicle', await loadGLB('models/vehicle.glb'))
     this.addModel('cube', await loadGLB('models/cube.glb'))
+    this.addModel('bowling-ball', await loadGLB('models/bowling-ball.glb'))
     this.addModel('bowling-pin', await loadGLB('models/bowling-pin.glb'))
     this.addModel('name-text-d', await loadGLB('models/name-text/name-text-d.glb'))
     this.addModel('name-text-d-collider', await loadGLB('models/name-text/name-text-d-collider.glb'))

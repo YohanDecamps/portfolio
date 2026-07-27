@@ -104,7 +104,7 @@
         {
           "type": "AmbientLight",
           "attributes": {
-            "intensity": 3
+            "intensity": 2
           }
         }
       ]
@@ -141,6 +141,39 @@
               "y": 30,
               "z": 10
             }
+          }
+        }
+      ]
+    },
+    {
+      "id": "bowling-ball",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 12
+            }
+          }
+        },
+        {
+          "type": "RigidBody",
+          "attributes": {
+            "isDynamic": true
+          }
+        },
+        {
+          "type": "SphereCollider",
+          "attributes": {
+            "radius": 0.5
+          }
+        },
+        {
+          "type": "Mesh",
+          "attributes": {
+            "meshName": "bowling-ball"
           }
         }
       ]
