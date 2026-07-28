@@ -42,6 +42,15 @@ export class GameObject {
     }
     return null
   }
+
+  getComponentString(componentName: string): Component | null {
+    for (const component of this.components) {
+      if (component.constructor.name === componentName) {
+        return component
+      }
+    }
+    return null
+  }
   
   removeComponent(component: Component): void {
     const index = this.components.indexOf(component)

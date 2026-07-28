@@ -59,6 +59,28 @@ export class RigidBody extends Component {
     return colliders
   }
 
+  setPosition(x: number, y: number, z: number): void {
+    this.body.setTranslation({ x, y, z }, true)
+    this.gameObject?.getComponent(Transform)?.setPosition(x, y, z)
+  }
+
+  setRotation(x: number, y: number, z: number, w: number): void {
+    this.body.setRotation({ x, y, z, w }, true)
+    this.gameObject?.getComponent(Transform)?.setRotation(x, y, z, w)
+  }
+
+  setLinearVelocity(x: number, y: number, z: number): void {
+    this.body.setLinvel({ x, y, z }, true)
+  }
+  
+  setAngularVelocity(x: number, y: number, z: number): void {
+    this.body.setAngvel({ x, y, z }, true)
+  }
+
+  resetForces(): void {
+    this.body.resetForces(true)
+  }
+
   isCollidingWith(other: RigidBody): boolean {
     const collidersA = this.getColliders()
     const collidersB = other.getColliders()

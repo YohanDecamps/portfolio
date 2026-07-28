@@ -17,4 +17,11 @@ export class Transform extends Component {
     this.position.y = y
     this.position.z = z
   }
+
+  setRotation(x: number, y: number, z: number, w: number): void {
+    this.rotation.x = x
+    this.rotation.y = y
+    this.rotation.z = z
+    this.rotation.w = w
+  }
 }

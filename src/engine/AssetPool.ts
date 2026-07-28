@@ -55,5 +55,6 @@ export class AssetPool {
     this.addModel('stargirl', await loadGLB('models/stargirl.glb'))
     this.addModel('stargirl-collider', await loadGLB('models/stargirl-collider.glb'))
     this.addModel('enter-zone', await loadGLB('models/enter-zone.glb'))
+    this.addModel('bowling-reset', await loadGLB('models/bowling-reset.glb'))
   }
 }

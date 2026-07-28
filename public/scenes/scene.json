@@ -11,7 +11,7 @@
     },
     {
       "id": "bowling-pin",
-      "tags": ["bowling-pin"],
+      "tags": ["bowling"],
       "$ref": "bowling-pin.json"
     },
     {
@@ -338,9 +338,15 @@
           }
         },
         {
-          "type": "EnterZone",
+          "type": "OpenLink",
           "attributes": {
             "link": "https://www.youtube.com/watch?v=r7Q2LKPxBZ4"
+          }
+        },
+        {
+          "type": "EnterZone",
+          "attributes": {
+            "actionComponent": "OpenLink"
           }
         }
       ]
@@ -367,9 +373,15 @@
           }
         },
         {
-          "type": "EnterZone",
+          "type": "OpenLink",
           "attributes": {
             "link": "https://github.com/YohanDecamps/lunar-lounge"
+          }
+        },
+        {
+          "type": "EnterZone",
+          "attributes": {
+            "actionComponent": "OpenLink"
           }
         }
       ]
@@ -396,9 +408,15 @@
           }
         },
         {
-          "type": "EnterZone",
+          "type": "OpenLink",
           "attributes": {
             "link": "https://www.youtube.com/watch?v=WTchy4Y60_Y"
+          }
+        },
+        {
+          "type": "EnterZone",
+          "attributes": {
+            "actionComponent": "OpenLink"
           }
         }
       ]
@@ -425,9 +443,15 @@
           }
         },
         {
-          "type": "EnterZone",
+          "type": "OpenLink",
           "attributes": {
             "link": "https://github.com/YohanDecamps/Zappy"
+          }
+        },
+        {
+          "type": "EnterZone",
+          "attributes": {
+            "actionComponent": "OpenLink"
           }
         }
       ]
@@ -459,6 +483,18 @@
               "x": 400,
               "y": 1,
               "z": 400
+            }
+          }
+        },
+        {
+          "type": "CylinderCollider",
+          "attributes": {
+            "radius": 0.1,
+            "height": 4,
+            "position": {
+              "x": -4,
+              "y": 2,
+              "z": -11
             }
           }
         },
@@ -842,6 +878,7 @@
     },
     {
       "id": "bowling-ball",
+      "tags": ["bowling"],
       "components": [
         {
           "type": "Transform",
@@ -974,8 +1011,32 @@
       "id": "bowling-pin-handler",
       "components": [
         {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": -3.47,
+              "y": -2.5,
+              "z": 13.65
+            }
+          }
+        },
+        {
+          "type": "EnterZone",
+          "attributes": {
+            "actionComponent": "BowlingPin"
+          }
+        },
+        {
           "type": "BowlingPin",
           "attributes": {}
+        },
+        {
+          "type": "Mesh",
+          "attributes": {
+            "meshName": "bowling-reset",
+            "castShadow": false,
+            "receiveShadow": false
+          }
         }
       ]
     },
