@@ -1,4 +1,4 @@
-import { ColliderDesc } from "@dimforge/rapier3d-compat"
+import { ActiveEvents, ColliderDesc } from "@dimforge/rapier3d-compat"
 import { Component } from "./Component"
 import { RigidBody } from "./RigidBody"
 import { world } from "../main"
@@ -6,6 +6,7 @@ import { world } from "../main"
 export class BoxCollider extends Component {
   private colliderDescription: ColliderDesc
 
+  public isSensor: boolean = false
   public dimensions: { x: number, y: number, z: number }
   public density: number = 1
   public position: { x: number, y: number, z: number } = { x: 0, y: 0, z: 0 }
@@ -20,6 +21,8 @@ export class BoxCollider extends Component {
     this.colliderDescription = ColliderDesc.cuboid(this.dimensions.x / 2, this.dimensions.y / 2, this.dimensions.z / 2)
     this.colliderDescription.setDensity(this.density)
     this.colliderDescription.setTranslation(this.position.x, this.position.y, this.position.z)
+    this.colliderDescription.setSensor(this.isSensor)
+    this.colliderDescription.setActiveEvents(ActiveEvents.CONTACT_FORCE_EVENTS) // Enable all events (collision, contact force, etc.)
     
     const rigidBody = this.gameObject?.getComponent(RigidBody)
     if (!rigidBody) {

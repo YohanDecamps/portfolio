@@ -17,6 +17,7 @@ import { FollowPlayer } from "../scripts/FollowPlayer"
 import { PlayerMovementController } from "../scripts/PlayerMovementController"
 import { ConvexMeshCollider } from "../components/ConvexMeshCollider"
 import { SphereCollider } from "../components/SphereCollier"
+import { EnterZone } from "../scripts/EnterZone"
 
 function applyAttributes(target: any, attributes: Record<string, unknown>) {
   for (const key of Object.keys(attributes)) {
@@ -55,7 +56,8 @@ const componentTypeMap: Record<string, new () => Component> = {
   'LookAtPlayer': LookAtPlayer,
   'PlayerMovementController': PlayerMovementController,
   'BowlingPin': BowlingPin,
-  'FollowPlayer': FollowPlayer
+  'FollowPlayer': FollowPlayer,
+  'EnterZone': EnterZone
 }
 
 const jsonCache = new Map<string, Promise<any>>()

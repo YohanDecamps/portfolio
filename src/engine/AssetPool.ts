@@ -44,5 +44,16 @@ export class AssetPool {
     this.addModel('name-text-o', await loadGLB('models/name-text/name-text-o.glb'))
     this.addModel('name-text-h', await loadGLB('models/name-text/name-text-h.glb'))
     this.addModel('name-text-n', await loadGLB('models/name-text/name-text-n.glb'))
+    this.addModel('text-game', await loadGLB('models/text/text-game.glb'))
+    this.addModel('text-dev', await loadGLB('models/text/text-dev.glb'))
+    this.addModel('cpp', await loadGLB('models/cpp.glb'))
+    this.addModel('cs', await loadGLB('models/cs.glb'))
+    this.addModel('unity', await loadGLB('models/unity.glb'))
+    this.addModel('cpp-collider', await loadGLB('models/cpp-collider.glb'))
+    this.addModel('suzanne', await loadGLB('models/suzanne.glb'))
+    this.addModel('suzanne-collider', await loadGLB('models/suzanne-collider.glb'))
+    this.addModel('stargirl', await loadGLB('models/stargirl.glb'))
+    this.addModel('stargirl-collider', await loadGLB('models/stargirl-collider.glb'))
+    this.addModel('enter-zone', await loadGLB('models/enter-zone.glb'))
   }
 }

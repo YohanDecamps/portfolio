@@ -9,6 +9,8 @@ export class Mesh extends Component {
   public position: { x: number, y: number, z: number } = { x: 0, y: 0, z: 0 }
   public rotation: { x: number, y: number, z: number, w: number } = { x: 0, y: 0, z: 0, w: 1 }
   public scale: { x: number, y: number, z: number } = { x: 1, y: 1, z: 1 }
+  public castShadow: boolean = true
+  public receiveShadow: boolean = true
 
   constructor() {
     super()
@@ -24,8 +26,8 @@ export class Mesh extends Component {
       this.mesh = this.mesh.clone()
       this.mesh.traverse((child) => {
         if (child instanceof THREE.Mesh) {
-          child.castShadow = true
-          child.receiveShadow = true
+          child.castShadow = this.castShadow
+          child.receiveShadow = this.receiveShadow
         }
       })
       scene.add(this.mesh)
@@ -36,39 +38,39 @@ export class Mesh extends Component {
       )
       scene.add(this.mesh)
     }
-    this.mesh.receiveShadow = true
-    this.mesh.castShadow = true
+    this.mesh.receiveShadow = this.receiveShadow
+    this.mesh.castShadow = this.castShadow
   }
 
   update(dt: number): void {
-  const transform = this.gameObject?.getComponent(Transform)
-  if (transform && this.mesh) {
-    const transformPosition = new THREE.Vector3(
-      transform.position.x,
-      transform.position.y,
-      transform.position.z
-    )
-    const transformRotation = new THREE.Quaternion(
-      transform.rotation.x,
-      transform.rotation.y,
-      transform.rotation.z,
-      transform.rotation.w
-    )
+    const transform = this.gameObject?.getComponent(Transform)
+    if (transform && this.mesh) {
+      const transformPosition = new THREE.Vector3(
+        transform.position.x,
+        transform.position.y,
+        transform.position.z
+      )
+      const transformRotation = new THREE.Quaternion(
+        transform.rotation.x,
+        transform.rotation.y,
+        transform.rotation.z,
+        transform.rotation.w
+      )
 
-    const localOffset = new THREE.Vector3(this.position.x, this.position.y, this.position.z)
-    localOffset.applyQuaternion(transformRotation)
+      const localOffset = new THREE.Vector3(this.position.x, this.position.y, this.position.z)
+      localOffset.applyQuaternion(transformRotation)
 
-    const worldPosition = transformPosition.clone().add(localOffset)
-    this.mesh.position.copy(worldPosition)
+      const worldPosition = transformPosition.clone().add(localOffset)
+      this.mesh.position.copy(worldPosition)
 
-    const additionalRotation = new THREE.Quaternion(
-      this.rotation.x,
-      this.rotation.y,
-      this.rotation.z,
-      this.rotation.w
-    )
-    this.mesh.quaternion.copy(transformRotation.clone().multiply(additionalRotation))
-    this.mesh.scale.set(this.scale.x, this.scale.y, this.scale.z)
-  }
+      const additionalRotation = new THREE.Quaternion(
+        this.rotation.x,
+        this.rotation.y,
+        this.rotation.z,
+        this.rotation.w
+      )
+      this.mesh.quaternion.copy(transformRotation.clone().multiply(additionalRotation))
+      this.mesh.scale.set(this.scale.x, this.scale.y, this.scale.z)
+    }
   }
 }

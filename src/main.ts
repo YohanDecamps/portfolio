@@ -9,9 +9,12 @@ import { Transform } from './components/Transform'
 import { AssetPool } from './engine/AssetPool'
 import { LookAtPlayer } from './scripts/LookAtPlayer'
 import { FollowPlayer } from './scripts/FollowPlayer'
+import { InputManager } from './lib/InputManager'
 
 await RAPIER.init()
+export const input = new InputManager()
 export const scene = new THREE.Scene()
+scene.background = new THREE.Color(0x87ceeb) // Sky blue color
 export let world = new RAPIER.World(new RAPIER.Vector3(0, -9.81, 0))
 
 export const assetPool = new AssetPool()

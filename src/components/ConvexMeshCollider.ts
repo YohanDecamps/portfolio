@@ -40,8 +40,6 @@ export class ConvexMeshCollider extends Component {
     
     this.colliderDescription = ColliderDesc.convexMesh(arrayVertices) || ColliderDesc.cuboid(1, 1, 1)
     this.colliderDescription.setDensity(this.density)
-    // Rotate 90 on the X axis to align with the Y axis
-    this.colliderDescription.setRotation(new RAPIER.Quaternion(-Math.sin(Math.PI / 4), 0, 0, Math.cos(Math.PI / 4)))
     this.colliderDescription.setTranslation(this.position.x, this.position.y, this.position.z)
     
     const rigidBody = this.gameObject?.getComponent(RigidBody)

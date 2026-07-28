@@ -41,6 +41,8 @@ export class DirectionalLight extends Component {
     this.light.shadow.mapSize.height = 2048
     this.light.shadow.bias = -0.0001
 
+    this.light.shadow.radius = 4
+
     scene.add(this.light)
   }
 
