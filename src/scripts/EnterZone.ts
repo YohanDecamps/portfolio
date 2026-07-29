@@ -35,7 +35,6 @@ export class EnterZone extends Component {
   }
 
   private isPlayerInBounds(): boolean {
-    this.player = app.findGameObjectsByTag("player")[0]
     if (!this.player || !this.gameObject) return false
 
 
@@ -53,6 +52,7 @@ export class EnterZone extends Component {
   }
 
   update(dt: number) {
+    this.player = app.findGameObjectsByTag("player")[0]
     if (this.enterCooldown > 0) {
       this.enterCooldown -= dt
     }
