@@ -32,10 +32,10 @@ export class EnterZone extends Component {
   }
 
   start(): void {
-    this.player = app.findGameObjectsByTag("player")[0]
   }
 
   private isPlayerInBounds(): boolean {
+    this.player = app.findGameObjectsByTag("player")[0]
     if (!this.player || !this.gameObject) return false
 
 
