@@ -65,6 +65,7 @@ export class EnterZone extends Component {
     const isCurrentlyInBounds = this.isPlayerInBounds()
 
     if (isCurrentlyInBounds) {
+      console.log('Enter key down:', isEnterDown, 'wasEnterDown:', this.wasEnterDown, 'enterCooldown:', this.enterCooldown)
       if (isEnterDown && !this.wasEnterDown && this.enterCooldown <= 0) {
         const actionComponent = this.gameObject?.getComponentString(this.actionComponent)
 
