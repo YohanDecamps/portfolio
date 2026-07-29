@@ -17,9 +17,7 @@ export const scene = new THREE.Scene()
 
 export let world = new RAPIER.World(new RAPIER.Vector3(0, -9.81, 0))
 export const eventQueue: RAPIER.EventQueue = new RAPIER.EventQueue(true)
-window.addEventListener('keydown', (e) => {
-  console.log('RAW keydown:', e.key, e.code, 'defaultPrevented:', e.defaultPrevented)
-})
+
 export const assetPool = new AssetPool()
 await assetPool.loadAllAssets()
 

@@ -67,7 +67,6 @@ export class EnterZone extends Component {
     if (isCurrentlyInBounds) {
       if (isEnterDown && !this.wasEnterDown && this.enterCooldown <= 0) {
         const actionComponent = this.gameObject?.getComponentString(this.actionComponent)
-        console.log('Executing action for component:', this.actionComponent, 'found:', !!actionComponent)
 
         if (actionComponent && 'executeAction' in actionComponent) {
           (actionComponent as ActionComponent).executeAction()
