@@ -1039,14 +1039,14 @@
           }
         },
         {
+          "type": "BowlingPin",
+          "attributes": {}
+        },
+        {
           "type": "EnterZone",
           "attributes": {
             "actionComponent": "BowlingPin"
           }
-        },
-        {
-          "type": "BowlingPin",
-          "attributes": {}
         },
         {
           "type": "Mesh",
