@@ -6,6 +6,11 @@
       "$ref": "vehicle.json"
     },
     {
+      "id": "arrow",
+      "tags": ["collision-sound"],
+      "$ref": "arrow.json"
+    },
+    {
       "id": "panel",
       "$ref": "panel.json"
     },
@@ -513,6 +518,239 @@
           "type": "Mesh",
           "attributes": {
             "meshName": "ground"
+          }
+        }
+      ]
+    },
+    {
+      "id": "scene-lab-text",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 0,
+              "y": -0.5,
+              "z": -14.8
+            },
+            "rotation": {
+              "x": -0.5,
+              "y": 0.5,
+              "z": 0.5,
+              "w": 0.5
+            }
+          }
+        },
+        {
+          "type": "Text",
+          "attributes": {
+            "text": "SceneLab is a rendering engine\nwritten in C++ and Open GL featuring\na BVH-accelerated raytracer, multiple\nrasterization models including \nPhong, Gouraud, Physically Based\nRendering (PBR).\n\nThis projects aims to give to the\nuser as much features as possible to\nachieve beautifull renders\n",
+            "size": "0.22",
+            "depth": "0.01"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lunar-lounge-text",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 0,
+              "y": -0.5,
+              "z": -34.8
+            },
+            "rotation": {
+              "x": -0.5,
+              "y": 0.5,
+              "z": 0.5,
+              "w": 0.5
+            }
+          }
+        },
+        {
+          "type": "Text",
+          "attributes": {
+            "text": "Lunar Lounge is a game made in just 10 weeks in the\ncontext of the Ubisoft Game Lab Competion in Canada,\n\nIn this couch multiplayer game taking place in a\nretro furturistic restaurant you must battle your\nopponent by using abilities to serve the clients first.\n\nLeading this project has been a great learning\nexperience as it was my first time working along\nartists, the also game was nominated for the jury's\nspecial award",
+            "size": "0.22",
+            "depth": "0.01"
+          }
+        }
+      ]
+    },
+    {
+      "id": "r-type-text",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 0,
+              "y": -0.5,
+              "z": -61.5
+            },
+            "rotation": {
+              "x": -0.5,
+              "y": 0.5,
+              "z": 0.5,
+              "w": 0.5
+            }
+          }
+        },
+        {
+          "type": "Text",
+          "attributes": {
+            "text": "R-type is a game engine featuring an ECS, scripting and a\nphysics engine inspired by Falling Everything, the physics\nengine developped for the game Noita.\n\nI developped this pixel based physics engine that relies on\nbreakable rigidbodies and a cellular automaton.\n\nFor breakable rigidbodies I implemented several geometry\nalgorithms such as marching squares to generate the objects\nborders, douglas-peucker to optimize them and tesselation\nto generate convex composite colliders.",
+            "size": "0.22",
+            "depth": "0.01"
+          }
+        }
+      ]
+    },
+    {
+      "id": "r-type-text",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 0,
+              "y": -0.5,
+              "z": -87.5
+            },
+            "rotation": {
+              "x": -0.5,
+              "y": 0.5,
+              "z": 0.5,
+              "w": 0.5
+            }
+          }
+        },
+        {
+          "type": "Text",
+          "attributes": {
+            "text": "The Zappy is a world simulation project where factions of bots\nfight for the control of ressources on a map. The projects\nincludes a server that manages the game logic, an AI client that\ncommunicates with the server to drive the bots, and a 3D GUI\nclient that displays the infos sent by the server.\n\nIn this project I worked on the GUI written in C++ and OpenGL that\nfeatures procedural terrain generation and 3D skeletal animation.\n\nThis project won the Zappy contest in the GUI, AI, and server\ncategoriesa",
+            "size": "0.22",
+            "depth": "0.01"
+          }
+        }
+      ]
+    },
+    {
+      "id": "arrow-up",
+      "prefab": "arrow",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 4,
+              "y": 0,
+              "z": 4
+            },
+            "rotation": {
+              "x": 0,
+              "y": -0.383,
+              "z": 0,
+              "w": 0.924
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "arrow-down",
+      "prefab": "arrow",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 4.8,
+              "y": 0,
+              "z": 4.8
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0.924,
+              "z": 0,
+              "w": 0.383
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "arrow-left",
+      "prefab": "arrow",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 4,
+              "y": 0,
+              "z": 5.6
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0.383,
+              "z": 0,
+              "w": 0.924
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "arrow-right",
+      "prefab": "arrow",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 5.6,
+              "y": 0,
+              "z": 4
+            },
+            "rotation": {
+              "x": 0,
+              "y": -0.924,
+              "z": 0,
+              "w": 0.383
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "arrow-text",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 3.4,
+              "y": -0.5,
+              "z": 8.1
+            },
+            "rotation": {
+              "x": 0.653,
+              "y": -0.271,
+              "z": -0.271,
+              "w": -0.653
+            }
+          }
+        },
+        {
+          "type": "Text",
+          "attributes": {
+            "text": "Use the arrows keys to move",
+            "size": "0.3",
+            "depth": "0.01"
           }
         }
       ]

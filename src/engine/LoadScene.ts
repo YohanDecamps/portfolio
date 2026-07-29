@@ -21,6 +21,7 @@ import { EnterZone } from "../scripts/EnterZone"
 import { OpenLink } from "../scripts/OpenLink"
 import { CollisionSounds } from "../scripts/CollisionSounds"
 import { VehicleFlipping } from "../scripts/VehicleFlipping"
+import { Text } from "../components/Text"
 
 function applyAttributes(target: any, attributes: Record<string, unknown>) {
   for (const key of Object.keys(attributes)) {
@@ -63,7 +64,8 @@ const componentTypeMap: Record<string, new () => Component> = {
   'EnterZone': EnterZone,
   'OpenLink': OpenLink,
   'CollisionSounds': CollisionSounds,
-  'VehicleFlipping': VehicleFlipping
+  'VehicleFlipping': VehicleFlipping,
+  'Text': Text,
 }
 
 const jsonCache = new Map<string, Promise<any>>()

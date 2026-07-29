@@ -1,0 +1,31 @@
+{
+  "components": [
+    {
+      "type": "RigidBody",
+      "attributes": {
+        "isDynamic": true
+      }
+    },
+    {
+      "type": "BoxCollider",
+      "attributes": {
+        "dimensions": {
+          "x": 0.98,
+          "y": 0.66,
+          "z": 0.98
+        },
+        "position": {
+          "x": 0,
+          "y": 0.03,
+          "z": 0
+        }
+      }
+    },
+    {
+      "type": "Mesh",
+      "attributes": {
+        "meshName": "arrow"
+      }
+    }
+  ]
+}

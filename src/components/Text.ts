@@ -2,49 +2,52 @@ import * as THREE from 'three'
 import { Component } from './Component'
 import { Transform } from './Transform'
 import { assetPool, scene } from '../main'
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
-export class Mesh extends Component {
-  private mesh: THREE.Object3D
-  public meshName: string = ''
+export class Text extends Component {
+  public font = 'adwaita'
+  public text = ''
+  public size = 1
+  public depth = 0.1
+
   public position: { x: number, y: number, z: number } = { x: 0, y: 0, z: 0 }
   public rotation: { x: number, y: number, z: number, w: number } = { x: 0, y: 0, z: 0, w: 1 }
   public scale: { x: number, y: number, z: number } = { x: 1, y: 1, z: 1 }
   public castShadow: boolean = true
   public receiveShadow: boolean = true
 
+  private mesh: THREE.Mesh | null = null
+
   constructor() {
     super()
-    this.mesh = null as unknown as THREE.Object3D
   }
 
   start(): void {
-    if (this.meshName) {
-      this.mesh = assetPool.getModel(this.meshName) || new THREE.Mesh(
-        new THREE.BoxGeometry(1, 1, 1),
-        new THREE.MeshPhongMaterial({ color: 0xff00ff })
-      )
-      this.mesh = this.mesh.clone()
-      this.mesh.traverse((child) => {
-        if (child instanceof THREE.Mesh) {
-          child.castShadow = this.castShadow
-          child.receiveShadow = this.receiveShadow
-        }
-      })
-      scene.add(this.mesh)
-    } else {
-      this.mesh = new THREE.Mesh(
-        new THREE.BoxGeometry(1, 1, 1),
-        new THREE.MeshPhongMaterial({ color: 0xff00ff })
-      )
-      scene.add(this.mesh)
+    const font = assetPool.getFont(this.font)
+    if (!font) {
+      console.error(`Font ${this.font} not found in asset pool.`)
+      return
     }
-    this.mesh.receiveShadow = this.receiveShadow
-    this.mesh.castShadow = this.castShadow
+
+    const geometry = new TextGeometry(this.text, {
+      font: font,
+      size: this.size,
+      depth: this.depth,
+      curveSegments: 12,
+      bevelEnabled: false,
+    })
+
+    const material = new THREE.MeshPhongMaterial({ color: 0xffffff })
+    const mesh = new THREE.Mesh(geometry, material)
+    mesh.castShadow = this.castShadow
+    mesh.receiveShadow = this.receiveShadow
+
+    scene.add(mesh)
+    this.mesh = mesh
   }
 
   update(dt: number): void {
     const transform = this.gameObject?.getComponent(Transform)
-
     if (transform && this.mesh) {
       const transformPosition = new THREE.Vector3(
         transform.position.x,

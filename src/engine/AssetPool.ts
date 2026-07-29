@@ -1,10 +1,14 @@
 import * as THREE from 'three'
 import { loadGLB } from '../lib/loadGLB'
 import type { GameObject } from '../components/GameObject'
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import type { Font } from 'three/examples/jsm/loaders/FontLoader.js';
+import { loadFont } from '../lib/loadFont';
 
 export class AssetPool {
   private static models: Map<string, THREE.Object3D> = new Map()
   private static prefabs: Map<string, GameObject> = new Map()
+  private static fonts: Map<string, THREE.Font> = new Map()
 
   public addModel(name: string, model: THREE.Object3D): void {
     AssetPool.models.set(name, model)
@@ -20,6 +24,14 @@ export class AssetPool {
 
   public getPrefab(name: string): GameObject | undefined {
     return AssetPool.prefabs.get(name)
+  }
+
+  public addFont(name: string, font: Font): void {
+    AssetPool.fonts.set(name, font)
+  }
+
+  public getFont(name: string): Font | undefined {
+    return AssetPool.fonts.get(name)
   }
 
   public async loadAllAssets(): Promise<void> {
@@ -56,5 +68,7 @@ export class AssetPool {
     this.addModel('stargirl-collider', await loadGLB('models/stargirl-collider.glb'))
     this.addModel('enter-zone', await loadGLB('models/enter-zone.glb'))
     this.addModel('bowling-reset', await loadGLB('models/bowling-reset.glb'))
+    this.addModel('arrow', await loadGLB('models/arrow.glb'))
+    this.addFont('adwaita', await loadFont('fonts/AdwaitaMono-Regular.json'))
   }
 }
