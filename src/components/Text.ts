@@ -33,7 +33,7 @@ export class Text extends Component {
       font: font,
       size: this.size,
       depth: this.depth,
-      curveSegments: 12,
+      curveSegments: 1,
       bevelEnabled: false,
     })
 
