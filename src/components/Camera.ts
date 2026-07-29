@@ -2,7 +2,7 @@
 import * as THREE from 'three'
 import { Component } from './Component'
 import { Transform } from './Transform'
-import { scene } from '../main'
+import { listener, scene } from '../main'
 
 export class Camera extends Component {
   private camera: THREE.OrthographicCamera
@@ -30,6 +30,7 @@ export class Camera extends Component {
     }
     scene.add(this.camera)
     this.camera.updateProjectionMatrix()
+    this.camera.add( listener )
   }
 
   update(dt: number): void {

@@ -1,4 +1,4 @@
-import RAPIER, { ColliderDesc } from "@dimforge/rapier3d-compat"
+import RAPIER, { ActiveEvents, ColliderDesc } from "@dimforge/rapier3d-compat"
 import { Component } from "./Component"
 import { RigidBody } from "./RigidBody"
 import { assetPool, world } from "../main"
@@ -41,6 +41,7 @@ export class ConvexMeshCollider extends Component {
     this.colliderDescription = ColliderDesc.convexMesh(arrayVertices) || ColliderDesc.cuboid(1, 1, 1)
     this.colliderDescription.setDensity(this.density)
     this.colliderDescription.setTranslation(this.position.x, this.position.y, this.position.z)
+    this.colliderDescription.setActiveEvents(ActiveEvents.COLLISION_EVENTS)
     
     const rigidBody = this.gameObject?.getComponent(RigidBody)
     if (!rigidBody) {

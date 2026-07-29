@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { scene, world } from '../main'
+import { eventQueue, scene, world } from '../main'
 import type { GameObject } from '../components/GameObject'
 import { loadScene } from './LoadScene'
 
@@ -88,7 +88,7 @@ export class App {
   }
 
   private update(dt: number) {
-    world.step()
+    world.step(eventQueue)
 //    this.debugRenderer.update()
 
     for (const u of this.gameObjects) {

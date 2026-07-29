@@ -2,7 +2,7 @@
   "prefabs": [
     {
       "id": "vehicle",
-      "tags": ["player"],
+      "tags": ["player", "collision-sound"],
       "$ref": "vehicle.json"
     },
     {
@@ -11,52 +11,63 @@
     },
     {
       "id": "bowling-pin",
-      "tags": ["bowling"],
+      "tags": ["bowling", "collision-sound"],
       "$ref": "bowling-pin.json"
     },
     {
       "id": "letter-d",
-      "$ref": "name-text/name-letter-d.json"
+      "$ref": "name-text/name-letter-d.json",
+      "tags": ["collision-sound"]
     },
     {
       "id": "letter-e",
-      "$ref": "name-text/name-letter-e.json"
+      "$ref": "name-text/name-letter-e.json",
+      "tags": ["collision-sound"]
     },
     {
       "id": "letter-c",
-      "$ref": "name-text/name-letter-c.json"
+      "$ref": "name-text/name-letter-c.json",
+      "tags": ["collision-sound"]
     },
     {
       "id": "letter-a",
-      "$ref": "name-text/name-letter-a.json"
+      "$ref": "name-text/name-letter-a.json",
+      "tags": ["collision-sound"]
     },
     {
       "id": "letter-m",
-      "$ref": "name-text/name-letter-m.json"
+      "$ref": "name-text/name-letter-m.json",
+      "tags": ["collision-sound"]
     },
     {
       "id": "letter-p",
-      "$ref": "name-text/name-letter-p.json"
+      "$ref": "name-text/name-letter-p.json",
+      "tags": ["collision-sound"]
     },
     {
       "id": "letter-s",
-      "$ref": "name-text/name-letter-s.json"
+      "$ref": "name-text/name-letter-s.json",
+      "tags": ["collision-sound"]
     },
     {
       "id": "letter-y",
-      "$ref": "name-text/name-letter-y.json"
+      "$ref": "name-text/name-letter-y.json",
+      "tags": ["collision-sound"]
     },
     {
       "id": "letter-o",
-      "$ref": "name-text/name-letter-o.json"
+      "$ref": "name-text/name-letter-o.json",
+      "tags": ["collision-sound"]
     },
     {
       "id": "letter-h",
-      "$ref": "name-text/name-letter-h.json"
+      "$ref": "name-text/name-letter-h.json",
+      "tags": ["collision-sound"]
     },
     {
       "id": "letter-n",
-      "$ref": "name-text/name-letter-n.json"
+      "$ref": "name-text/name-letter-n.json",
+      "tags": ["collision-sound"]
     }
   ],
   "gameObjects": [
@@ -508,6 +519,7 @@
     },
     {
       "id": "suzanne",
+      "tags": ["collision-sound"],
       "components": [
         {
           "type": "Transform",
@@ -542,6 +554,7 @@
     },
     {
       "id": "cpp",
+      "tags": ["collision-sound"],
       "components": [
         {
           "type": "Transform",
@@ -590,6 +603,7 @@
     },
     {
       "id": "cs",
+      "tags": ["collision-sound"],
       "components": [
         {
           "type": "Transform",
@@ -638,6 +652,7 @@
     },
     {
       "id": "unity",
+      "tags": ["collision-sound"],
       "components": [
         {
           "type": "Transform",
@@ -686,6 +701,7 @@
     },
     {
       "id": "cpp",
+      "tags": ["collision-sound"],
       "components": [
         {
           "type": "Transform",
@@ -734,6 +750,7 @@
     },
     {
       "id": "cpp",
+      "tags": ["collision-sound"],
       "components": [
         {
           "type": "Transform",
@@ -782,6 +799,7 @@
     },
     {
       "id": "stargirl",
+      "tags": ["collision-sound"],
       "components": [
         {
           "type": "Transform",
@@ -878,7 +896,7 @@
     },
     {
       "id": "bowling-ball",
-      "tags": ["bowling"],
+      "tags": ["bowling", "collision-sound"],
       "components": [
         {
           "type": "Transform",
@@ -1310,6 +1328,7 @@
     },
     {
       "id": "text-game",
+      "tags": ["collision-sound"],
       "components": [
         {
           "type": "Transform",
@@ -1358,6 +1377,7 @@
     },
     {
       "id": "text-dev",
+      "tags": ["collision-sound"],
       "components": [
         {
           "type": "Transform",
@@ -1400,6 +1420,17 @@
           "type": "Mesh",
           "attributes": {
             "meshName": "text-dev"
+          }
+        }
+      ]
+    },
+    {
+      "id": "collision-sounds",
+      "components": [
+        {
+          "type": "CollisionSounds",
+          "attributes": {
+
           }
         }
       ]

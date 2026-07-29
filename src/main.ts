@@ -14,13 +14,19 @@ import { InputManager } from './lib/InputManager'
 await RAPIER.init()
 export const input = new InputManager()
 export const scene = new THREE.Scene()
-scene.background = new THREE.Color(0x87ceeb) // Sky blue color
+
 export let world = new RAPIER.World(new RAPIER.Vector3(0, -9.81, 0))
+export const eventQueue: RAPIER.EventQueue = new RAPIER.EventQueue(true)
 
 export const assetPool = new AssetPool()
 await assetPool.loadAllAssets()
 
+export const listener = new THREE.AudioListener();
+
+export const audioLoader = new THREE.AudioLoader();
+
 let camera: GameObject = new GameObject()
+scene.background = new THREE.Color(0x87ceeb)
 camera.getComponent(Transform)?.setPosition(20, 20, 20)
 let cameraComponent = new Camera()
 camera.addComponent(cameraComponent)

@@ -1,9 +1,10 @@
 import { Component } from "../components/Component"
 import type { GameObject } from "../components/GameObject"
-import { app, input } from "../main"
+import { app, audioLoader, listener } from "../main"
 import { Transform } from "../components/Transform"
 import { RigidBody } from "../components/RigidBody"
 import type { ActionComponent } from "../components/ActionComponent"
+import * as THREE from "three"
 
 export class BowlingPin extends Component implements ActionComponent {
   private bowlingPins: GameObject[] = []
@@ -58,15 +59,22 @@ export class BowlingPin extends Component implements ActionComponent {
           Math.pow(transform.position.z - startPos.z, 2)
         )
 
-        if (distance > 0.5) {
+        if (distance > 0.1) {
           this.movedPins.add(i)
         }
       }
     }
 
 
-    if (this.movedPins.size > 3 && !this.hasStriked) {
-      console.log("Strike! More than 3 pins have moved.")
+    if (this.movedPins.size > 2 && !this.hasStriked) {
+      const sound = new THREE.Audio(listener)
+      audioLoader.load( 'sounds/strike.mp3', function( buffer ) {
+  	  sound.setBuffer( buffer );
+  	  sound.setLoop( false );
+  	  sound.setVolume( 0.25 );
+      sound.setDetune( Math.random() * 200 - 100 );
+  	  sound.play();
+      });
       this.hasStriked = true
     }
   }

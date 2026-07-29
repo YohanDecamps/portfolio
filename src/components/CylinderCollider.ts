@@ -1,4 +1,4 @@
-import { ColliderDesc } from "@dimforge/rapier3d-compat"
+import { ActiveEvents, ColliderDesc } from "@dimforge/rapier3d-compat"
 import { Component } from "./Component"
 import { RigidBody } from "./RigidBody"
 import { world } from "../main"
@@ -22,6 +22,7 @@ export class CylinderCollider extends Component {
     this.colliderDescription.setTranslation(this.position.x, this.position.y, this.position.z)
     const q = new THREE.Quaternion(this.rotation.x, this.rotation.y, this.rotation.z, this.rotation.w).normalize()
     this.colliderDescription.setRotation(q)
+    this.colliderDescription.setActiveEvents(ActiveEvents.COLLISION_EVENTS)
     
     const rigidBody = this.gameObject?.getComponent(RigidBody)
     if (!rigidBody) {

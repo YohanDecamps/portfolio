@@ -22,7 +22,7 @@ export class BoxCollider extends Component {
     this.colliderDescription.setDensity(this.density)
     this.colliderDescription.setTranslation(this.position.x, this.position.y, this.position.z)
     this.colliderDescription.setSensor(this.isSensor)
-    this.colliderDescription.setActiveEvents(ActiveEvents.CONTACT_FORCE_EVENTS) // Enable all events (collision, contact force, etc.)
+    this.colliderDescription.setActiveEvents(ActiveEvents.COLLISION_EVENTS)
     
     const rigidBody = this.gameObject?.getComponent(RigidBody)
     if (!rigidBody) {
