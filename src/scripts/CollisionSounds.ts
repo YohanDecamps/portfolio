@@ -35,21 +35,20 @@ export class CollisionSounds extends Component {
 
     eventQueue.drainCollisionEvents((handle1: RAPIER.ColliderHandle, handle2: RAPIER.ColliderHandle, started: boolean) => {
       if (started) {
-        const pairKey = this.getPairKey(handle1, handle2)
-        const lastPlayedTime = this.lastPlayed.get(pairKey)
 
-        if (lastPlayedTime !== undefined && this.elapsedTime - lastPlayedTime < this.cooldownDuration) {
-          // Still on cooldown, skip playing a sound for this pair
-          return
-        }
-
-        console.log(`Collision started between ${handle1} and ${handle2}`)
         const rb1 = world.getCollider(handle1).parent()
         const rb2 = world.getCollider(handle2).parent()
+
         if (rb1 && rb2) {
+          const pairKey = this.getPairKey(rb1?.handle, rb2?.handle)
+          const lastPlayedTime = this.lastPlayed.get(pairKey)
+
+          if (lastPlayedTime !== undefined && this.elapsedTime - lastPlayedTime < this.cooldownDuration) {
+            // Still on cooldown, skip playing a sound for this pair
+            return
+          }
           const gameObject1 = this.rigidbodies.find(rb => rb.getBody() === rb1)
           const gameObject2 = this.rigidbodies.find(rb => rb.getBody() === rb2)
-          console.log(`GameObject1: ${gameObject1}, GameObject2: ${gameObject2}`)
 
           if (gameObject1 && gameObject2) {
             // Mark this pair as played now, before the async load resolves,
@@ -57,10 +56,8 @@ export class CollisionSounds extends Component {
             this.lastPlayed.set(pairKey, this.elapsedTime)
 
             const velocityDiff = Math.abs(rb1.linvel().x - rb2.linvel().x) + Math.abs(rb1.linvel().y - rb2.linvel().y) + Math.abs(rb1.linvel().z - rb2.linvel().z)
-            console.log(`Velocity difference: ${velocityDiff}`)
 
             const averageMass = (rb1.mass() + rb2.mass()) / 2
-            console.log(`Average mass: ${averageMass}`)
 
             const sound = new THREE.Audio(listener)
             audioLoader.load('sounds/stone-impact-' + Math.floor(Math.random() * 6) + '.ogg', function (buffer) {

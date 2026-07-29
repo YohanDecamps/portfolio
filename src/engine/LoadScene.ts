@@ -20,6 +20,7 @@ import { SphereCollider } from "../components/SphereCollier"
 import { EnterZone } from "../scripts/EnterZone"
 import { OpenLink } from "../scripts/OpenLink"
 import { CollisionSounds } from "../scripts/CollisionSounds"
+import { VehicleFlipping } from "../scripts/VehicleFlipping"
 
 function applyAttributes(target: any, attributes: Record<string, unknown>) {
   for (const key of Object.keys(attributes)) {
@@ -61,7 +62,8 @@ const componentTypeMap: Record<string, new () => Component> = {
   'FollowPlayer': FollowPlayer,
   'EnterZone': EnterZone,
   'OpenLink': OpenLink,
-  'CollisionSounds': CollisionSounds
+  'CollisionSounds': CollisionSounds,
+  'VehicleFlipping': VehicleFlipping
 }
 
 const jsonCache = new Map<string, Promise<any>>()

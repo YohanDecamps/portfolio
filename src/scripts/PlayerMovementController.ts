@@ -1,14 +1,14 @@
 import { Component } from '../components/Component'
 import { RigidBody } from '../components/RigidBody'
 import { VehicleController } from '../components/VehicleController'
-import { audioLoader, input, listener } from '../main'
+import { audioLoader, input, listener, world } from '../main'
 import * as THREE from 'three'
 
 export class PlayerMovementController extends Component {
   public engineForce = 2
   public brakeForce = 200
   public maxSteering = 0.3
-  public boostForce = 15
+  public boostForce = 3
   
   private volume = 0
   private volumeTarget = 0.25
@@ -61,8 +61,8 @@ export class PlayerMovementController extends Component {
     vehicle.setWheelBrake(2, brake)
     vehicle.setWheelBrake(3, brake)
 
-    vehicle.setWheelEngineForce(0, engine)
-    vehicle.setWheelEngineForce(1, engine)
+    vehicle.setWheelEngineForce(2, engine)
+    vehicle.setWheelEngineForce(3, engine)
 
 
     if (this.engineStarted && engine !== 0) {

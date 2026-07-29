@@ -27,6 +27,10 @@
       }
     },
     {
+      "type": "VehicleFlipping",
+      "attributes": {}
+    },
+    {
       "type": "PlayerMovementController",
       "attributes": {}
     }

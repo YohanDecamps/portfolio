@@ -1,4 +1,4 @@
-import RAPIER, { RigidBodyDesc } from "@dimforge/rapier3d-compat"
+import RAPIER from "@dimforge/rapier3d-compat"
 import { Component } from "./Component"
 import { Transform } from "./Transform"
 import { world } from "../main"
