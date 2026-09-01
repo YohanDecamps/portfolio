@@ -1,7 +1,8 @@
 import * as THREE from 'three'
-import { eventQueue, scene, world } from '../main'
+import { eventQueue, input, scene, world } from '../main'
 import type { GameObject } from '../components/GameObject'
 import { loadScene, preloadJsonFiles } from './LoadScene'
+import Stats from 'stats.js';
 
 export class PhysicsDebugRenderer {
   private geometry: THREE.BufferGeometry
@@ -40,6 +41,7 @@ export class App {
   private gameObjects: GameObject[] = []
   
   private debugRenderer: PhysicsDebugRenderer
+  private stats: Stats;
   add(gameObject: GameObject) {
     this.gameObjects.push(gameObject)
   }
@@ -48,6 +50,8 @@ export class App {
     this.renderer = renderer
     this.camera = camera
     this.debugRenderer = new PhysicsDebugRenderer()
+    this.stats = new Stats();
+    this.stats.showPanel(0); // 0: fps, 1: ms/frame, 2: memory
   }
 
   public findGameObjectById(id: string): GameObject | null {
@@ -77,6 +81,17 @@ export class App {
   }
 
   private loop = () => {
+    // if f key is pressed, toggle stats display
+    if (input.isKeyDown('KeyF')) {
+      if (!document.body.contains(this.stats.dom)) {
+        document.body.appendChild(this.stats.dom);
+      }
+    } else {
+      if (document.body.contains(this.stats.dom)) {
+        document.body.removeChild(this.stats.dom);
+      }
+    }
+    this.stats.begin();
     requestAnimationFrame(this.loop)
     this.delta += this.clock.getDelta()
 
@@ -86,6 +101,7 @@ export class App {
 
       this.delta = this.delta % this.frameInterval
     }
+    this.stats.end();
   }
 
   private update(dt: number) {
