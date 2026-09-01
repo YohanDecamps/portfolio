@@ -28,6 +28,13 @@ export class PhysicsDebugRenderer {
 
     this.geometry.computeBoundingSphere()
   }
+  
+  clear() {
+    this.geometry.setAttribute(
+      'position',
+      new THREE.BufferAttribute(new Float32Array(0), 3)
+    )
+  }
 }
 
 export class App {
@@ -81,7 +88,6 @@ export class App {
   }
 
   private loop = () => {
-    // if f key is pressed, toggle stats display
     if (input.isKeyDown('KeyF')) {
       if (!document.body.contains(this.stats.dom)) {
         document.body.appendChild(this.stats.dom);
@@ -106,7 +112,11 @@ export class App {
 
   private update(dt: number) {
     world.step(eventQueue)
-//    this.debugRenderer.update()
+    if (input.isKeyDown('KeyF')) {
+      this.debugRenderer.update()
+    } else {
+      this.debugRenderer.clear()
+    }
 
     for (const u of this.gameObjects) {
       u.update(dt)
