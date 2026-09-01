@@ -35,47 +35,67 @@ export class AssetPool {
   }
 
   public async loadAllAssets(): Promise<void> {
-    this.addModel('ground', await loadGLB('models/ground.glb'))
-    this.addModel('vehicle', await loadGLB('models/vehicle.glb'))
-    this.addModel('cube', await loadGLB('models/cube.glb'))
-    this.addModel('bowling-ball', await loadGLB('models/bowling-ball.glb'))
-    this.addModel('bowling-pin', await loadGLB('models/bowling-pin.glb'))
-    this.addModel('name-text-d', await loadGLB('models/name-text/name-text-d.glb'))
-    this.addModel('name-text-d-collider', await loadGLB('models/name-text/name-text-d-collider.glb'))
-    this.addModel('name-text-e', await loadGLB('models/name-text/name-text-e.glb'))
-    this.addModel('name-text-e-collider', await loadGLB('models/name-text/name-text-e-collider.glb'))
-    this.addModel('name-text-c', await loadGLB('models/name-text/name-text-c.glb'))
-    this.addModel('name-text-c-collider', await loadGLB('models/name-text/name-text-c-collider.glb'))
-    this.addModel('name-text-a', await loadGLB('models/name-text/name-text-a.glb'))
-    this.addModel('name-text-a-collider', await loadGLB('models/name-text/name-text-a-collider.glb'))
-    this.addModel('name-text-m', await loadGLB('models/name-text/name-text-m.glb'))
-    this.addModel('name-text-p', await loadGLB('models/name-text/name-text-p.glb'))
-    this.addModel('name-text-s', await loadGLB('models/name-text/name-text-s.glb'))
-    this.addModel('name-text-y', await loadGLB('models/name-text/name-text-y.glb'))
-    this.addModel('name-text-y-collider', await loadGLB('models/name-text/name-text-y-collider.glb'))
-    this.addModel('name-text-o', await loadGLB('models/name-text/name-text-o.glb'))
-    this.addModel('name-text-h', await loadGLB('models/name-text/name-text-h.glb'))
-    this.addModel('name-text-n', await loadGLB('models/name-text/name-text-n.glb'))
-    this.addModel('text-game', await loadGLB('models/text/text-game.glb'))
-    this.addModel('text-dev', await loadGLB('models/text/text-dev.glb'))
-    this.addModel('cpp', await loadGLB('models/cpp.glb'))
-    this.addModel('cs', await loadGLB('models/cs.glb'))
-    this.addModel('unity', await loadGLB('models/unity.glb'))
-    this.addModel('cpp-collider', await loadGLB('models/cpp-collider.glb'))
-    this.addModel('suzanne', await loadGLB('models/suzanne.glb'))
-    this.addModel('suzanne-collider', await loadGLB('models/suzanne-collider.glb'))
-    this.addModel('stargirl', await loadGLB('models/stargirl.glb'))
-    this.addModel('stargirl-collider', await loadGLB('models/stargirl-collider.glb'))
-    this.addModel('enter-zone', await loadGLB('models/enter-zone.glb'))
-    this.addModel('bowling-reset', await loadGLB('models/bowling-reset.glb'))
-    this.addModel('arrow', await loadGLB('models/arrow.glb'))
-    this.addModel('painting', await loadGLB('models/painting.glb'))
-    this.addModel('painting-feet-collider', await loadGLB('models/painting-feet-collider.glb'))
-    this.addModel('painting-canva-collider', await loadGLB('models/painting-canva-collider.glb'))
-    this.addModel('arcade', await loadGLB('models/arcade.glb'))
-    this.addModel('arcade-collider', await loadGLB('models/arcade-collider.glb'))
-    this.addModel('keyboard', await loadGLB('models/keyboard.glb'))
-    this.addModel('keyboard-collider', await loadGLB('models/keyboard-collider.glb'))
-    this.addFont('adwaita', await loadFont('fonts/AdwaitaMono-Regular.json'))
+    const modelList: [string, string][] = [
+      ['ground', 'models/ground.glb'],
+      ['vehicle', 'models/vehicle.glb'],
+      ['cube', 'models/cube.glb'],
+      ['bowling-ball', 'models/bowling-ball.glb'],
+      ['bowling-pin', 'models/bowling-pin.glb'],
+      ['name-text-d', 'models/name-text/name-text-d.glb'],
+      ['name-text-d-collider', 'models/name-text/name-text-d-collider.glb'],
+      ['name-text-e', 'models/name-text/name-text-e.glb'],
+      ['name-text-e-collider', 'models/name-text/name-text-e-collider.glb'],
+      ['name-text-c', 'models/name-text/name-text-c.glb'],
+      ['name-text-c-collider', 'models/name-text/name-text-c-collider.glb'],
+      ['name-text-a', 'models/name-text/name-text-a.glb'],
+      ['name-text-a-collider', 'models/name-text/name-text-a-collider.glb'],
+      ['name-text-m', 'models/name-text/name-text-m.glb'],
+      ['name-text-p', 'models/name-text/name-text-p.glb'],
+      ['name-text-s', 'models/name-text/name-text-s.glb'],
+      ['name-text-y', 'models/name-text/name-text-y.glb'],
+      ['name-text-y-collider', 'models/name-text/name-text-y-collider.glb'],
+      ['name-text-o', 'models/name-text/name-text-o.glb'],
+      ['name-text-h', 'models/name-text/name-text-h.glb'],
+      ['name-text-n', 'models/name-text/name-text-n.glb'],
+      ['text-game', 'models/text/text-game.glb'],
+      ['text-dev', 'models/text/text-dev.glb'],
+      ['cpp', 'models/cpp.glb'],
+      ['cs', 'models/cs.glb'],
+      ['unity', 'models/unity.glb'],
+      ['cpp-collider', 'models/cpp-collider.glb'],
+      ['suzanne', 'models/suzanne.glb'],
+      ['suzanne-collider', 'models/suzanne-collider.glb'],
+      ['stargirl', 'models/stargirl.glb'],
+      ['stargirl-collider', 'models/stargirl-collider.glb'],
+      ['enter-zone', 'models/enter-zone.glb'],
+      ['bowling-reset', 'models/bowling-reset.glb'],
+      ['arrow', 'models/arrow.glb'],
+      ['painting', 'models/painting.glb'],
+      ['painting-feet-collider', 'models/painting-feet-collider.glb'],
+      ['painting-canva-collider', 'models/painting-canva-collider.glb'],
+      ['arcade', 'models/arcade.glb'],
+      ['arcade-collider', 'models/arcade-collider.glb'],
+      ['keyboard', 'models/keyboard.glb'],
+      ['keyboard-collider', 'models/keyboard-collider.glb'],
+    ]
+  
+    // fire off every load immediately (don't await here)
+    const modelPromises = modelList.map(
+      ([name, path]) => loadGLB(path).then(model => [name, model] as const)
+    )
+    const fontPromise = loadFont('fonts/AdwaitaMono-Regular.json').then(
+      font => ['adwaita', font] as const
+    )
+  
+    // now wait for all of them together
+    const [models, [fontName, font]] = await Promise.all([
+      Promise.all(modelPromises),
+      fontPromise,
+    ])
+  
+    for (const [name, model] of models) {
+      this.addModel(name, model)
+    }
+    this.addFont(fontName, font)
   }
 }
