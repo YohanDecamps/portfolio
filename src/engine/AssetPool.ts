@@ -69,6 +69,13 @@ export class AssetPool {
     this.addModel('enter-zone', await loadGLB('models/enter-zone.glb'))
     this.addModel('bowling-reset', await loadGLB('models/bowling-reset.glb'))
     this.addModel('arrow', await loadGLB('models/arrow.glb'))
+    this.addModel('painting', await loadGLB('models/painting.glb'))
+    this.addModel('painting-feet-collider', await loadGLB('models/painting-feet-collider.glb'))
+    this.addModel('painting-canva-collider', await loadGLB('models/painting-canva-collider.glb'))
+    this.addModel('arcade', await loadGLB('models/arcade.glb'))
+    this.addModel('arcade-collider', await loadGLB('models/arcade-collider.glb'))
+    this.addModel('keyboard', await loadGLB('models/keyboard.glb'))
+    this.addModel('keyboard-collider', await loadGLB('models/keyboard-collider.glb'))
     this.addFont('adwaita', await loadFont('fonts/AdwaitaMono-Regular.json'))
   }
 }

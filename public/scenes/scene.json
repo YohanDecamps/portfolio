@@ -254,28 +254,6 @@
             "position": {
               "x": -4,
               "y": 2,
-              "z": -77.8
-            },
-            "rotation": {
-              "x": 0,
-              "y": 1,
-              "z": 0,
-              "w": 0.266
-            }
-          }
-        }
-      ]
-    },
-    {
-      "id": "panel",
-      "prefab": "panel",
-      "components": [
-        {
-          "type": "Transform",
-          "attributes": {
-            "position": {
-              "x": -4,
-              "y": 2,
               "z": -90.3
             },
             "rotation": {
@@ -604,7 +582,7 @@
           "attributes": {
             "text": "R-type is a game engine featuring an ECS, scripting and a\nphysics engine inspired by Falling Everything, the physics\nengine developped for the game Noita.\n\nI developped this pixel based physics engine that relies on\nbreakable rigidbodies and a cellular automaton.\n\nFor breakable rigidbodies I implemented several geometry\nalgorithms such as marching squares to generate the objects\nborders, douglas-peucker to optimize them and tesselation\nto generate convex composite colliders.",
             "size": "0.22",
-            "depth": "0.01"
+            "depth": "0"
           }
         }
       ]
@@ -1658,6 +1636,118 @@
           "type": "Mesh",
           "attributes": {
             "meshName": "text-dev"
+          }
+        }
+      ]
+    },
+    {
+      "id": "painting",
+      "tags": ["collision-sound"],
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "RigidBody",
+          "attributes": {
+            "isDynamic": true
+          }
+        },
+        {
+          "type": "ConvexMeshCollider",
+          "attributes": {
+            "meshName": "painting-feet-collider",
+            "density": 1
+          }
+        },
+        {
+          "type": "ConvexMeshCollider",
+          "attributes": {
+            "meshName": "painting-canva-collider",
+            "density": 0.1
+          }
+        },
+        {
+          "type": "Mesh",
+          "attributes": {
+            "meshName": "painting"
+          }
+        }
+      ]
+    },
+    {
+      "id": "arcade",
+      "tags": ["collision-sound"],
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "RigidBody",
+          "attributes": {
+            "isDynamic": true
+          }
+        },
+        {
+          "type": "ConvexMeshCollider",
+          "attributes": {
+            "meshName": "arcade-collider",
+            "density": 0.3
+          }
+        },
+        {
+          "type": "Mesh",
+          "attributes": {
+            "meshName": "arcade"
+          }
+        }
+      ]
+    },
+    {
+      "id": "keyboard",
+      "tags": ["collision-sound"],
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 0,
+              "y": -1,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "RigidBody",
+          "attributes": {
+            "isDynamic": true
+          }
+        },
+        {
+          "type": "ConvexMeshCollider",
+          "attributes": {
+            "meshName": "keyboard-collider",
+            "density": 0.3
+          }
+        },
+        {
+          "type": "Mesh",
+          "attributes": {
+            "meshName": "keyboard"
           }
         }
       ]
