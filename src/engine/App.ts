@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { eventQueue, scene, world } from '../main'
 import type { GameObject } from '../components/GameObject'
-import { loadScene } from './LoadScene'
+import { loadScene, preloadJsonFiles } from './LoadScene'
 
 export class PhysicsDebugRenderer {
   private geometry: THREE.BufferGeometry
@@ -64,6 +64,7 @@ export class App {
   }
 
   async loadScene(scenePath: string) {
+    await preloadJsonFiles(scenePath)
     const loaded = await loadScene(scenePath)
     loaded.forEach(go => this.add(go))
   }

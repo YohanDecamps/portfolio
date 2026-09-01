@@ -23,6 +23,32 @@ import { CollisionSounds } from "../scripts/CollisionSounds"
 import { VehicleFlipping } from "../scripts/VehicleFlipping"
 import { Text } from "../components/Text"
 
+const jsonPreloadList: string[] = [
+  'vehicle.json',
+  'arrow.json',
+  'panel.json',
+  'bowling-pin.json',
+  'name-text/name-letter-d.json',
+  'name-text/name-letter-e.json',
+  'name-text/name-letter-c.json',
+  'name-text/name-letter-a.json',
+  'name-text/name-letter-m.json',
+  'name-text/name-letter-p.json',
+  'name-text/name-letter-s.json',
+  'name-text/name-letter-y.json',
+  'name-text/name-letter-o.json',
+  'name-text/name-letter-h.json',
+  'name-text/name-letter-n.json',
+]
+
+export async function preloadJsonFiles(scenePath: string): Promise<void> {
+  await Promise.all(
+    jsonPreloadList.map((relativePath) =>
+      fetchJson(resolveUrl(scenePath, relativePath))
+    )
+  )
+}
+
 function applyAttributes(target: any, attributes: Record<string, unknown>) {
   for (const key of Object.keys(attributes)) {
     const value = attributes[key]
