@@ -77,7 +77,6 @@ export class AssetPool {
       ['arcade-collider', 'models/arcade-collider.glb'],
       ['keyboard', 'models/keyboard.glb'],
       ['keyboard-collider', 'models/keyboard-collider.glb'],
-      ['unstuck-message', 'models/unstuck-message.glb'],
     ]
   
     // fire off every load immediately (don't await here)
