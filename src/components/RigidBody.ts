@@ -94,4 +94,11 @@ export class RigidBody extends Component {
     }
     return false
   }
+
+  setDynamic(isDynamic: boolean): void {
+    if (this.isDynamic !== isDynamic) {
+      this.isDynamic = isDynamic
+      this.body.setBodyType(isDynamic ? RAPIER.RigidBodyType.Dynamic : RAPIER.RigidBodyType.Fixed, true)
+    }
+  }
 }

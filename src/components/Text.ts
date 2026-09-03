@@ -10,10 +10,11 @@ export class Text extends Component {
   public size = 1
   public depth = 0.1
 
+  public isVisible: boolean = true
   public position: { x: number, y: number, z: number } = { x: 0, y: 0, z: 0 }
   public rotation: { x: number, y: number, z: number, w: number } = { x: 0, y: 0, z: 0, w: 1 }
   public scale: { x: number, y: number, z: number } = { x: 1, y: 1, z: 1 }
-  public castShadow: boolean = true
+  public castShadow: boolean = false
   public receiveShadow: boolean = true
 
   private mesh: THREE.Mesh | null = null
@@ -41,6 +42,7 @@ export class Text extends Component {
     const mesh = new THREE.Mesh(geometry, material)
     mesh.castShadow = this.castShadow
     mesh.receiveShadow = this.receiveShadow
+    mesh.visible = this.isVisible
 
     scene.add(mesh)
     this.mesh = mesh
@@ -75,6 +77,14 @@ export class Text extends Component {
       )
       this.mesh.quaternion.copy(transformRotation.clone().multiply(additionalRotation))
       this.mesh.scale.set(this.scale.x, this.scale.y, this.scale.z)
+      this.mesh.visible = this.isVisible
+    }
+  }
+  
+  setVisibility(visible: boolean): void {
+    this.isVisible = visible
+    if (this.mesh) {
+      this.mesh.visible = visible
     }
   }
 }

@@ -6,6 +6,7 @@ import { assetPool, scene } from '../main'
 export class Mesh extends Component {
   private mesh: THREE.Object3D
   public meshName: string = ''
+  public isVisible: boolean = true
   public position: { x: number, y: number, z: number } = { x: 0, y: 0, z: 0 }
   public rotation: { x: number, y: number, z: number, w: number } = { x: 0, y: 0, z: 0, w: 1 }
   public scale: { x: number, y: number, z: number } = { x: 1, y: 1, z: 1 }
@@ -40,6 +41,7 @@ export class Mesh extends Component {
     }
     this.mesh.receiveShadow = this.receiveShadow
     this.mesh.castShadow = this.castShadow
+    this.mesh.visible = this.isVisible
   }
 
   update(dt: number): void {
@@ -72,6 +74,14 @@ export class Mesh extends Component {
       )
       this.mesh.quaternion.copy(transformRotation.clone().multiply(additionalRotation))
       this.mesh.scale.set(this.scale.x, this.scale.y, this.scale.z)
+    }
+    this.mesh.visible = this.isVisible
+  }
+
+  setVisibility(visible: boolean): void {
+    this.isVisible = visible
+    if (this.mesh) {
+      this.mesh.visible = visible
     }
   }
 }

@@ -22,6 +22,7 @@ import { OpenLink } from "../scripts/OpenLink"
 import { CollisionSounds } from "../scripts/CollisionSounds"
 import { VehicleFlipping } from "../scripts/VehicleFlipping"
 import { Text } from "../components/Text"
+import { DetectStuck } from "../scripts/DetectStuck"
 
 const jsonPreloadList: string[] = [
   'vehicle.json',
@@ -92,6 +93,7 @@ const componentTypeMap: Record<string, new () => Component> = {
   'CollisionSounds': CollisionSounds,
   'VehicleFlipping': VehicleFlipping,
   'Text': Text,
+  'DetectStuck': DetectStuck,
 }
 
 const jsonCache = new Map<string, Promise<any>>()

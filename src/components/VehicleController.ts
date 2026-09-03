@@ -139,4 +139,12 @@ export class VehicleController extends Component {
       }
       this.wheelsBrakeForce[wheelIndex] = brakeForce
     }
+
+    isWheelGrounded(wheelIndex: number): boolean {
+      if (wheelIndex < 0 || wheelIndex >= this.wheels.length) {
+        throw new Error(`Wheel index ${wheelIndex} is out of bounds`)
+      }
+      
+      return this.vehicle.wheelIsInContact(wheelIndex)
+    }
 }

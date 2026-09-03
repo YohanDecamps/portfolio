@@ -1753,6 +1753,42 @@
       ]
     },
     {
+      "id": "unstuck-message",
+      "tags": ["unstuck-message"],
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "rotation": {
+              "x": 0,
+              "y": 1,
+              "z": 0,
+              "w": 2.5
+            }
+          }
+        },
+        {
+          "type": "Text",
+          "attributes": {
+            "text": "Hold R to unstuck vehicle",
+            "isVisible": false,
+            "size": "0.3",
+            "depth": "0.01"
+          }
+        },
+        {
+          "type": "FollowPlayer",
+          "attributes": {
+            "offset": {
+              "x": -2,
+              "y": 2,
+              "z": 2
+            }
+          }
+        }
+      ]
+    },
+    {
       "id": "collision-sounds",
       "components": [
         {
