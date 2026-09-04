@@ -613,6 +613,146 @@
       ]
     },
     {
+      "id": "epitech-text",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": -19.5,
+              "y": -0.45,
+              "z": -1.25
+            },
+            "rotation": {
+              "x": -0.5,
+              "y": 0.5,
+              "z": 0.5,
+              "w": 0.5
+            }
+          }
+        },
+        {
+          "type": "Text",
+          "attributes": {
+            "text": "         EPITECH is a software developpement\n         school based on a highly autonomus\n         project-based pedagogy delivering a\n diploma of Expert in Software Engineering.",
+            "size": "0.4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "fonroche-text",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": -30,
+              "y": -0.45,
+              "z": -1.25
+            },
+            "rotation": {
+              "x": -0.5,
+              "y": 0.5,
+              "z": 0.5,
+              "w": 0.5
+            }
+          }
+        },
+        {
+          "type": "Text",
+          "attributes": {
+            "text": "        At Fonroche Lighting I developped a\nmonitoring tool communicating with over 200 000\nconnect devices driven by an event-base\narchitecture using the MQTT protocol",
+            "size": "0.4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "thelio-text",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": -24,
+              "y": -0.45,
+              "z": 13
+            },
+            "rotation": {
+              "x": -0.5,
+              "y": 0.5,
+              "z": 0.5,
+              "w": 0.5
+            }
+          }
+        },
+        {
+          "type": "Text",
+          "attributes": {
+            "text": "   Creation of tratment pipelines on SQL\nserver data wharehouses, Power BI dashboards and\n                               archiving tooling",
+            "size": "0.4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "laval-text",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": -37.4,
+              "y": -0.45,
+              "z": 12.6
+            },
+            "rotation": {
+              "x": -0.5,
+              "y": 0.5,
+              "z": 0.5,
+              "w": 0.5
+            }
+          }
+        },
+        {
+          "type": "Text",
+          "attributes": {
+            "text": "Laval University is a school located in\n    Québec City, it delivers courses in\n   Software Engineering and Information\n technologies. I followed 10 different courses\n    including Graphics Programming, Video Game\n         Developpent and Software Architecture",
+            "size": "0.4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "5th-year-internship-text",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": -43.5,
+              "y": -0.45,
+              "z": -1.25
+            },
+            "rotation": {
+              "x": -0.5,
+              "y": 0.5,
+              "z": 0.5,
+              "w": 0.5
+            }
+          }
+        },
+        {
+          "type": "Text",
+          "attributes": {
+            "text": "        I'm currently looking for a 6 month\n        internship debuting March 1st 2027.",
+            "size": "0.4"
+          }
+        }
+      ]
+    },
+    {
       "id": "arrow-up",
       "prefab": "arrow",
       "components": [
@@ -1748,6 +1888,66 @@
       ]
     },
     {
+      "id": "globe",
+      "tags": ["collision-sound"],
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "RigidBody",
+          "attributes": {
+            "isDynamic": true
+          }
+        },
+        {
+          "type": "ConvexMeshCollider",
+          "attributes": {
+            "meshName": "globe-stand-collider",
+            "density": 1
+          }
+        },
+        {
+          "type": "SphereCollider",
+          "attributes": {
+            "radius": 1,
+            "density": 0.3,
+            "position": {
+              "x": 24.75,
+              "y": 2.1,
+              "z": 5.9
+            }
+          }
+        },
+        {
+          "type": "CylinderCollider",
+          "attributes": {
+            "radius": 0.55,
+            "height": 0.1,
+            "density": 1,
+            "position": {
+              "x": 24.75,
+              "y": 0.5,
+              "z": 5.9
+            }
+          }
+        },
+        {
+          "type": "Mesh",
+          "attributes": {
+            "meshName": "globe"
+          }
+        }
+      ]
+    },
+    {
       "id": "unstuck-message",
       "tags": ["unstuck-message"],
       "components": [
@@ -1767,7 +1967,8 @@
           "attributes": {
             "text": "Hold R to unstuck vehicle",
             "isVisible": false,
-            "size": "0.37"
+            "size": "0.37",
+            "color": "#FFFFFF"
           }
         },
         {

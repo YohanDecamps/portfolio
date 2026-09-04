@@ -5,6 +5,7 @@ import { world } from "../main"
 
 export class RigidBody extends Component {
   private body: RAPIER.RigidBody
+  private transform: Transform | null | undefined = null
   public isDynamic: boolean = true
 
   constructor() {
@@ -18,27 +19,31 @@ export class RigidBody extends Component {
     } else {
       this.body = world.createRigidBody(RAPIER.RigidBodyDesc.fixed())
     }
-    const transform = this.gameObject?.getComponent(Transform)
-    if (transform) {
-      this.body.setTranslation({ x: transform.position.x, y: transform.position.y, z: transform.position.z }, true)
-      this.body.setRotation({ x: transform.rotation.x, y: transform.rotation.y, z: transform.rotation.z, w: transform.rotation.w }, true)
+    this.transform = this.gameObject?.getComponent(Transform)
+    if (this.transform) {
+      this.body.setTranslation({ x: this.transform.position.x, y: this.transform.position.y, z: this.transform.position.z }, true)
+      this.body.setRotation({ x: this.transform.rotation.x, y: this.transform.rotation.y, z: this.transform.rotation.z, w: this.transform.rotation.w }, true)
     }
   }
 
   update(dt: number): void {
     if (this.body.isFixed()) return
 
+    const startTime = performance.now()
     const pos = this.body.translation()
     const rot = this.body.rotation()
-    let transform = this.gameObject?.getComponent(Transform)
-    if (transform) {
-      transform.position.x = pos.x
-      transform.position.y = pos.y
-      transform.position.z = pos.z
-      transform.rotation.x = rot.x
-      transform.rotation.y = rot.y
-      transform.rotation.z = rot.z
-      transform.rotation.w = rot.w
+    const endTime = performance.now()
+    if (endTime - startTime > 1) {
+      console.warn(`RigidBody update took ${endTime - startTime} ms`)
+    }
+    if (this.transform) {
+      this.transform.position.x = pos.x
+      this.transform.position.y = pos.y
+      this.transform.position.z = pos.z
+      this.transform.rotation.x = rot.x
+      this.transform.rotation.y = rot.y
+      this.transform.rotation.z = rot.z
+      this.transform.rotation.w = rot.w
     }
   }
 

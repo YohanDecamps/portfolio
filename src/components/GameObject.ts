@@ -61,7 +61,12 @@ export class GameObject {
 
   update(dt: number): void {
     for (const component of this.components) {
+      const componentStartTime = performance.now()
       component.update(dt)
+      const componentEndTime = performance.now()
+      if (componentEndTime - componentStartTime > 2) {
+        console.warn(`Component ${component.constructor.name} on ${this.id} took ${componentEndTime - componentStartTime}ms to update.`)
+      }
     }
   }
 }
