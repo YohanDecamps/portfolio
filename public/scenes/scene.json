@@ -311,6 +311,28 @@
       ]
     },
     {
+      "id": "panel",
+      "prefab": "panel",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": -4,
+              "y": 2,
+              "z": -115.8
+            },
+            "rotation": {
+              "x": 0,
+              "y": 1,
+              "z": 0,
+              "w": 0.266
+            }
+          }
+        }
+      ]
+    },
+    {
       "id": "scene-lab-enter-zone",
       "components": [
         {
