@@ -116,6 +116,7 @@ export class VehicleController extends Component {
       this.wheels.forEach((wheel, i) => {
         this.vehicle.setWheelSteering(i, this.wheelsSteering[i] || 0)
         this.vehicle.setWheelEngineForce(i, this.wheelsEngineForce[i] || 0)
+        this.vehicle.setWheelBrake(i, this.wheelsBrakeForce[i] || 0)
       })
     }
 

@@ -6,7 +6,7 @@ import * as THREE from 'three'
 
 export class PlayerMovementController extends Component {
   public engineForce = 2
-  public brakeForce = 200
+  public brakeForce = 0.05
   public maxSteering = 0.3
   public boostForce = 3
   
@@ -43,7 +43,6 @@ export class PlayerMovementController extends Component {
     }
 
     if (input.isKeyDown('Space')) {
-      console.log("Brake applied")
       brake = this.brakeForce
     }
 
@@ -58,6 +57,8 @@ export class PlayerMovementController extends Component {
     vehicle.setWheelSteering(2, steering)
     vehicle.setWheelSteering(3, steering)
 
+    vehicle.setWheelBrake(0, brake)
+    vehicle.setWheelBrake(1, brake)
     vehicle.setWheelBrake(2, brake)
     vehicle.setWheelBrake(3, brake)
 
