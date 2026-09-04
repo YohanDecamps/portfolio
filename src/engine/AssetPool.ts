@@ -79,6 +79,9 @@ export class AssetPool {
       ['keyboard-collider', 'models/keyboard-collider.glb'],
       ['globe', 'models/globe.glb'],
       ['globe-stand-collider', 'models/globe-stand-collider.glb'],
+      ['pot', 'models/pot.glb'],
+      ['pot-collider', 'models/pot-collider.glb'],
+      ['mash-paddle', 'models/mash-paddle.glb'],
     ]
   
     // fire off every load immediately (don't await here)

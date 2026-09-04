@@ -1784,7 +1784,7 @@
           "attributes": {
             "position": {
               "x": 0,
-              "y": 0,
+              "y": -1,
               "z": 0
             }
           }
@@ -1826,7 +1826,7 @@
           "attributes": {
             "position": {
               "x": 0,
-              "y": 0,
+              "y": -1,
               "z": 0
             }
           }
@@ -1896,7 +1896,7 @@
           "attributes": {
             "position": {
               "x": 0,
-              "y": 0,
+              "y": -1,
               "z": 0
             }
           }
@@ -1943,6 +1943,76 @@
           "type": "Mesh",
           "attributes": {
             "meshName": "globe"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pot",
+      "tags": ["collision-sound"],
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 0,
+              "y": -1,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "RigidBody",
+          "attributes": {
+            "isDynamic": true
+          }
+        },
+        {
+          "type": "ConvexMeshCollider",
+          "attributes": {
+            "meshName": "pot-collider",
+            "density": 0.1
+          }
+        },
+        {
+          "type": "Mesh",
+          "attributes": {
+            "meshName": "pot"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mash-paddle",
+      "tags": ["collision-sound"],
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": -0.1,
+              "y": -1,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "RigidBody",
+          "attributes": {
+            "isDynamic": true
+          }
+        },
+        {
+          "type": "ConvexMeshCollider",
+          "attributes": {
+            "meshName": "mash-paddle",
+            "density": 1
+          }
+        },
+        {
+          "type": "Mesh",
+          "attributes": {
+            "meshName": "mash-paddle"
           }
         }
       ]

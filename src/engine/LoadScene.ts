@@ -23,6 +23,7 @@ import { CollisionSounds } from "../scripts/CollisionSounds"
 import { VehicleFlipping } from "../scripts/VehicleFlipping"
 import { Text } from "../components/Text"
 import { DetectStuck } from "../scripts/DetectStuck"
+import { SpotLight } from "../components/SpotLight"
 
 const jsonPreloadList: string[] = [
   'vehicle.json',
@@ -83,6 +84,7 @@ const componentTypeMap: Record<string, new () => Component> = {
   'Camera': Camera,
   'AmbientLight': AmbientLight,
   'DirectionalLight': DirectionalLight,
+  'SpotLight': SpotLight,
   'VehicleController': VehicleController,
   'LookAtPlayer': LookAtPlayer,
   'PlayerMovementController': PlayerMovementController,
