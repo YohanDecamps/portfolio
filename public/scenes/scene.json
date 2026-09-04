@@ -501,6 +501,130 @@
       ]
     },
     {
+      "id": "invisible-wall-east",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": -200
+            }
+          }
+        },
+        {
+          "type": "RigidBody",
+          "attributes": {
+            "isDynamic": false
+          }
+        },
+        {
+          "type": "BoxCollider",
+          "attributes": {
+            "dimensions": {
+              "x": 400,
+              "y": 400,
+              "z": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "invisible-wall-north",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 200,
+              "y": 0,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "RigidBody",
+          "attributes": {
+            "isDynamic": false
+          }
+        },
+        {
+          "type": "BoxCollider",
+          "attributes": {
+            "dimensions": {
+              "x": 0,
+              "y": 400,
+              "z": 400
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "invisible-wall-west",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 200
+            }
+          }
+        },
+        {
+          "type": "RigidBody",
+          "attributes": {
+            "isDynamic": false
+          }
+        },
+        {
+          "type": "BoxCollider",
+          "attributes": {
+            "dimensions": {
+              "x": 400,
+              "y": 400,
+              "z": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "invisible-wall-south",
+      "components": [
+        {
+          "type": "Transform",
+          "attributes": {
+            "position": {
+              "x": -200,
+              "y": 0,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "RigidBody",
+          "attributes": {
+            "isDynamic": false
+          }
+        },
+        {
+          "type": "BoxCollider",
+          "attributes": {
+            "dimensions": {
+              "x": 0,
+              "y": 400,
+              "z": 400
+            }
+          }
+        }
+      ]
+    },
+    {
       "id": "scene-lab-text",
       "components": [
         {
