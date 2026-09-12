@@ -7,6 +7,7 @@ export class RigidBody extends Component {
   private body: RAPIER.RigidBody
   private transform: Transform | null | undefined = null
   public isDynamic: boolean = true
+  public canSleep: boolean = true
 
   constructor() {
     super()
@@ -14,11 +15,11 @@ export class RigidBody extends Component {
   }
 
   start(): void {
-    if (this.isDynamic) {
-      this.body = world.createRigidBody(RAPIER.RigidBodyDesc.dynamic())
-    } else {
-      this.body = world.createRigidBody(RAPIER.RigidBodyDesc.fixed())
-    }
+    const desc = (this.isDynamic
+      ? RAPIER.RigidBodyDesc.dynamic()
+      : RAPIER.RigidBodyDesc.fixed()
+    ).setCanSleep(this.canSleep)
+    this.body = world.createRigidBody(desc)
     this.transform = this.gameObject?.getComponent(Transform)
     if (this.transform) {
       this.body.setTranslation({ x: this.transform.position.x, y: this.transform.position.y, z: this.transform.position.z }, true)

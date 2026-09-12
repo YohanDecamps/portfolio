@@ -2,7 +2,7 @@
   "components": [
     {
       "type": "RigidBody",
-      "attributes": { "isDynamic": true }
+      "attributes": { "isDynamic": true, "canSleep": false }
     },
     {
       "type": "BoxCollider",
