@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { eventQueue, input, scene, world } from '../main'
 import type { GameObject } from '../components/GameObject'
 import { loadScene, preloadJsonFiles } from './LoadScene'
+import { Profiler } from '../lib/Profiler'
 import Stats from 'stats.js';
 
 export class PhysicsDebugRenderer {
@@ -49,6 +50,9 @@ export class App {
   
   private debugRenderer: PhysicsDebugRenderer
   private stats: Stats;
+  private profiler = new Profiler()
+  private debugEnabled = false
+  private wasFDown = false
   add(gameObject: GameObject) {
     this.gameObjects.push(gameObject)
   }
@@ -88,15 +92,21 @@ export class App {
   }
 
   private loop = () => {
-    if (input.isKeyDown('KeyF')) {
-      if (!document.body.contains(this.stats.dom)) {
-        document.body.appendChild(this.stats.dom);
-      }
-    } else {
-      if (document.body.contains(this.stats.dom)) {
-        document.body.removeChild(this.stats.dom);
+    // F toggles debug mode on/off (edge-triggered, not hold-to-show).
+    const fDown = input.isKeyDown('KeyF')
+    if (fDown && !this.wasFDown) {
+      this.debugEnabled = !this.debugEnabled
+      if (this.debugEnabled) {
+        document.body.appendChild(this.stats.dom)
+        this.profiler.show()
+      } else {
+        this.stats.dom.remove()
+        this.profiler.hide()
       }
     }
+    this.wasFDown = fDown
+
+    const frameStart = performance.now()
     this.stats.begin();
     requestAnimationFrame(this.loop)
 
@@ -117,23 +127,33 @@ export class App {
     // each callback lets the display cadence drive frame timing: constant
     // 16.67ms on 60Hz, constant vsync multiples on 120/144Hz.
     this.render()
+    this.profiler.recordFrame(performance.now() - frameStart)
+    this.profiler.update()
     this.stats.end();
   }
 
   private update(dt: number) {
+    const physicsStart = performance.now()
     world.step(eventQueue)
-    if (input.isKeyDown('KeyF')) {
+    this.profiler.record('physics', performance.now() - physicsStart)
+
+    if (this.debugEnabled) {
       this.debugRenderer.update()
     } else {
       this.debugRenderer.clear()
     }
 
     for (const u of this.gameObjects) {
+      const goStart = performance.now()
       u.update(dt)
+      this.profiler.record(`GO ${u.id}`, performance.now() - goStart)
+      this.profiler.meshStats(u)
     }
   }
 
   private render() {
+    const renderStart = performance.now()
     this.renderer.render(scene, this.camera)
+    this.profiler.record('render', performance.now() - renderStart)
   }
 }
