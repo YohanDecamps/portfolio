@@ -6,6 +6,10 @@ export class InputManager {
   constructor() {
     window.addEventListener('keydown', e => this.keys.add(e.code))
     window.addEventListener('keyup', e => this.keys.delete(e.code))
+    window.addEventListener('blur', () => this.keys.clear())
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) this.keys.clear()
+    })
 
     window.addEventListener('mousemove', e => {
       this.mouseDelta.x += e.movementX
