@@ -99,14 +99,24 @@ export class App {
     }
     this.stats.begin();
     requestAnimationFrame(this.loop)
-    this.delta += this.clock.getDelta()
 
-    if (this.delta > this.frameInterval) {
-      this.update(this.delta)
-      this.render()
-
-      this.delta = this.delta % this.frameInterval
+    // Fixed-timestep physics, capped so a long stall (background tab, GC)
+    // can't spiral into a catch-up loop.
+    this.delta = Math.min(this.delta + this.clock.getDelta(), this.frameInterval * 4)
+    const steps = Math.floor(this.delta / this.frameInterval)
+    if (steps > 0) {
+      this.delta -= steps * this.frameInterval
+      for (let i = 0; i < steps; i++) {
+        this.update(this.frameInterval)
+      }
     }
+    // Render on EVERY callback, decoupled from physics stepping. Gating the
+    // render to 60Hz physics steps forces 60Hz content onto the display's
+    // vsync grid: on a 144Hz panel that lands on alternating 2/3-vsync
+    // boundaries (14/21ms), which reads as irregular frame intervals. Rendering
+    // each callback lets the display cadence drive frame timing: constant
+    // 16.67ms on 60Hz, constant vsync multiples on 120/144Hz.
+    this.render()
     this.stats.end();
   }
 
