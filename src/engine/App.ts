@@ -15,6 +15,10 @@ export class PhysicsDebugRenderer {
     this.geometry = new THREE.BufferGeometry()
     this.material = new THREE.LineBasicMaterial({ color: 0x00ff00 })
     this.mesh = new THREE.LineSegments(this.geometry, this.material)
+    // Debug lines are camera-agnostic; and an empty geometry has no usable
+    // bounding sphere, so don't let three.js try to cull it.
+    this.mesh.frustumCulled = false
+    this.mesh.visible = false
 
     scene.add(this.mesh)
   }
@@ -28,13 +32,13 @@ export class PhysicsDebugRenderer {
     )
 
     this.geometry.computeBoundingSphere()
+    this.mesh.visible = true
   }
   
   clear() {
-    this.geometry.setAttribute(
-      'position',
-      new THREE.BufferAttribute(new Float32Array(0), 3)
-    )
+    // Hiding is enough; previously this allocated an empty Float32Array +
+    // BufferAttribute every frame while debug was off.
+    this.mesh.visible = false
   }
 }
 
@@ -110,8 +114,6 @@ export class App {
     this.stats.begin();
     requestAnimationFrame(this.loop)
 
-    // Fixed-timestep physics, capped so a long stall (background tab, GC)
-    // can't spiral into a catch-up loop.
     this.delta = Math.min(this.delta + this.clock.getDelta(), this.frameInterval * 4)
     const steps = Math.floor(this.delta / this.frameInterval)
     if (steps > 0) {
@@ -120,12 +122,6 @@ export class App {
         this.update(this.frameInterval)
       }
     }
-    // Render on EVERY callback, decoupled from physics stepping. Gating the
-    // render to 60Hz physics steps forces 60Hz content onto the display's
-    // vsync grid: on a 144Hz panel that lands on alternating 2/3-vsync
-    // boundaries (14/21ms), which reads as irregular frame intervals. Rendering
-    // each callback lets the display cadence drive frame timing: constant
-    // 16.67ms on 60Hz, constant vsync multiples on 120/144Hz.
     this.render()
     this.profiler.recordFrame(performance.now() - frameStart)
     this.profiler.update()
@@ -155,5 +151,6 @@ export class App {
     const renderStart = performance.now()
     this.renderer.render(scene, this.camera)
     this.profiler.record('render', performance.now() - renderStart)
+    this.profiler.renderStats(this.renderer.info.render.calls, this.renderer.info.render.triangles)
   }
 }

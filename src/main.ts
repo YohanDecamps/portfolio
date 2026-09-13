@@ -26,13 +26,14 @@ export const listener = new THREE.AudioListener();
 export const audioLoader = new THREE.AudioLoader();
 
 let camera: GameObject = new GameObject()
+camera.tags.push('camera')
 scene.background = new THREE.Color(0x87ceeb)
 camera.getComponent(Transform)?.setPosition(20, 20, 20)
 let cameraComponent = new Camera()
 camera.addComponent(cameraComponent)
 cameraComponent.start()
 
-const renderer = useRenderer(cameraComponent.getCamera())
+const renderer = useRenderer()
 
 export let app = new App(renderer, cameraComponent.getCamera())
 

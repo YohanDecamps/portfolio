@@ -18,6 +18,14 @@ export class Profiler {
   private vertexCache = new Map<string, { verts: number; shadow: boolean }>()
   private overlay: HTMLDivElement | null = null
   private frames = 0
+  private renderCalls = 0
+  private renderTris = 0
+
+  /** Draw calls / triangles of the last renderer.render() (culling feedback). */
+  renderStats(calls: number, triangles: number): void {
+    this.renderCalls = calls
+    this.renderTris = triangles
+  }
 
   record(name: string, ms: number): void {
     let s = this.series.get(name)
@@ -123,6 +131,7 @@ export class Profiler {
     lines.push(`  ${row('physics')}`)
     lines.push(`  gameObjects   ${this.fmt(goTotal)}ms total`)
     lines.push(`  ${row('render')}`)
+    lines.push(`  draw calls ${this.renderCalls}   tris ${this.renderTris.toLocaleString()}`)
     lines.push('')
     lines.push('slowest updates (avg/frame):')
     for (const r of goRows.slice(0, 4)) {
