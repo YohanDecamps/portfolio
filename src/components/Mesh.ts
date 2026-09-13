@@ -13,6 +13,14 @@ export class Mesh extends Component {
   public castShadow: boolean = true
   public receiveShadow: boolean = true
 
+  // Reused scratch objects so update() allocates nothing (per-frame GC pressure)
+  private p = new THREE.Vector3()
+  private q = new THREE.Quaternion()
+  private offset = new THREE.Vector3()
+  private worldPos = new THREE.Vector3()
+  private rot = new THREE.Quaternion()
+  private combined = new THREE.Quaternion()
+
   constructor() {
     super()
     this.mesh = null as unknown as THREE.Object3D
@@ -48,31 +56,22 @@ export class Mesh extends Component {
     const transform = this.gameObject?.getComponent(Transform)
 
     if (transform && this.mesh) {
-      const transformPosition = new THREE.Vector3(
-        transform.position.x,
-        transform.position.y,
-        transform.position.z
-      )
-      const transformRotation = new THREE.Quaternion(
+      this.p.set(transform.position.x, transform.position.y, transform.position.z)
+      this.q.set(
         transform.rotation.x,
         transform.rotation.y,
         transform.rotation.z,
         transform.rotation.w
       ).normalize()
 
-      const localOffset = new THREE.Vector3(this.position.x, this.position.y, this.position.z)
-      localOffset.applyQuaternion(transformRotation)
+      this.offset.set(this.position.x, this.position.y, this.position.z)
+      this.offset.applyQuaternion(this.q)
+      this.worldPos.copy(this.p).add(this.offset)
+      this.mesh.position.copy(this.worldPos)
 
-      const worldPosition = transformPosition.clone().add(localOffset)
-      this.mesh.position.copy(worldPosition)
-
-      const additionalRotation = new THREE.Quaternion(
-        this.rotation.x,
-        this.rotation.y,
-        this.rotation.z,
-        this.rotation.w
-      )
-      this.mesh.quaternion.copy(transformRotation.clone().multiply(additionalRotation))
+      this.rot.set(this.rotation.x, this.rotation.y, this.rotation.z, this.rotation.w)
+      this.combined.multiplyQuaternions(this.q, this.rot)
+      this.mesh.quaternion.copy(this.combined)
       this.mesh.scale.set(this.scale.x, this.scale.y, this.scale.z)
     }
     this.mesh.visible = this.isVisible

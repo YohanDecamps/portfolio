@@ -71,6 +71,12 @@ export class VehicleController extends Component {
       return wheel
     }
 
+    private steeringQuat = new THREE.Quaternion()
+    private rotationQuat = new THREE.Quaternion()
+    private wheelRot = new THREE.Quaternion()
+    private UP = new THREE.Vector3(0, 1, 0)
+    private baseRotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI / 2)
+
     update(dt: number): void {
       if (!this.vehicle) return
 
@@ -78,13 +84,6 @@ export class VehicleController extends Component {
 
       // Update wheel meshes based on vehicle state
       this.vehicle.updateVehicle(dt)
-      const _steeringQuat = new THREE.Quaternion()
-      const _rotationQuat = new THREE.Quaternion()
-      const UP = new THREE.Vector3(0, 1, 0)
-      const _baseRotation = new THREE.Quaternion().setFromAxisAngle(
-        new THREE.Vector3(0, 0, 1),
-        Math.PI / 2
-      )
 
       this.wheelMeshes.forEach((wheel, i) => {
         const axle = this.vehicle.wheelAxleCs(i)!
@@ -99,16 +98,16 @@ export class VehicleController extends Component {
 
         wheel.position.y = connectionY - suspension
 
-        _steeringQuat.setFromAxisAngle(UP, steering)
-        _rotationQuat.setFromAxisAngle(axle, rotation)
+        this.steeringQuat.setFromAxisAngle(this.UP, steering)
+        this.rotationQuat.setFromAxisAngle(axle, rotation)
         
-        const wheelRotation = new THREE.Quaternion().multiplyQuaternions(_steeringQuat, _rotationQuat) 
-        wheelRotation.multiply(_baseRotation)
+        this.wheelRot.multiplyQuaternions(this.steeringQuat, this.rotationQuat)
+        this.wheelRot.multiply(this.baseRotation)
         wheel.rotation = {
-          x: wheelRotation.x,
-          y: wheelRotation.y,
-          z: wheelRotation.z,
-          w: wheelRotation.w
+          x: this.wheelRot.x,
+          y: this.wheelRot.y,
+          z: this.wheelRot.z,
+          w: this.wheelRot.w
         }
       })
 
