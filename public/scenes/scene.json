@@ -1542,6 +1542,7 @@
         {
           "type": "EnterZone",
           "attributes": {
+            "boundaryDepth": 5,
             "actionComponent": "BowlingPin"
           }
         },

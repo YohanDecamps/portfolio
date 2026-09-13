@@ -18,8 +18,8 @@ export class EnterZone extends Component {
   private heightDisplacement: number = 0
   private speed: number = 4
 
-  private boundaryWidth: number = 2.5
-  private boundaryDepth: number = 4.5
+  public boundaryWidth: number = 3
+  public boundaryDepth: number = 6.5
 
   private wasEnterDown: boolean = false
   private enterCooldown: number = 0
