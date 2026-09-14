@@ -97,7 +97,8 @@ export class App {
 
   private loop = () => {
     // F toggles debug mode on/off (edge-triggered, not hold-to-show).
-    const fDown = input.isKeyDown('KeyF')
+    // const fDown = input.isKeyDown('KeyF')
+    const fDown = false
     if (fDown && !this.wasFDown) {
       this.debugEnabled = !this.debugEnabled
       if (this.debugEnabled) {
