@@ -531,7 +531,7 @@
             "position": {
               "x": 0,
               "y": 0,
-              "z": -200
+              "z": -150
             }
           }
         },
@@ -560,7 +560,7 @@
           "type": "Transform",
           "attributes": {
             "position": {
-              "x": 200,
+              "x": 75,
               "y": 0,
               "z": 0
             }
@@ -593,7 +593,7 @@
             "position": {
               "x": 0,
               "y": 0,
-              "z": 200
+              "z": 150
             }
           }
         },
@@ -622,7 +622,7 @@
           "type": "Transform",
           "attributes": {
             "position": {
-              "x": -200,
+              "x": -75,
               "y": 0,
               "z": 0
             }
