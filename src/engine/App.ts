@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { eventQueue, input, scene, world } from '../main'
 import type { GameObject } from '../components/GameObject'
 import { loadScene, preloadJsonFiles } from './LoadScene'
+import type { ViewRenderer } from '../scene/renderer'
 import { Profiler } from '../lib/Profiler'
 import Stats from 'stats.js';
 
@@ -47,8 +48,7 @@ export class App {
   private delta: number = 0
   private frameInterval: number = 1 / 60
 
-  private renderer: THREE.WebGLRenderer
-  private camera: THREE.Camera
+  private view: ViewRenderer
   
   private gameObjects: GameObject[] = []
   
@@ -61,9 +61,8 @@ export class App {
     this.gameObjects.push(gameObject)
   }
 
-  constructor(renderer: THREE.WebGLRenderer, camera: THREE.Camera) {
-    this.renderer = renderer
-    this.camera = camera
+  constructor(view: ViewRenderer) {
+    this.view = view
     this.debugRenderer = new PhysicsDebugRenderer()
     this.stats = new Stats();
     this.stats.showPanel(0); // 0: fps, 1: ms/frame, 2: memory
@@ -149,8 +148,10 @@ export class App {
 
   private render() {
     const renderStart = performance.now()
-    this.renderer.render(scene, this.camera)
+    // Render through the post-processing pipeline (scene pass -> depth of field)
+    this.view.renderer.info.reset()
+    this.view.postProcessing.render()
     this.profiler.record('render', performance.now() - renderStart)
-    this.profiler.renderStats(this.renderer.info.render.calls, this.renderer.info.render.triangles)
+    this.profiler.renderStats(this.view.renderer.info.render.calls, this.view.renderer.info.render.triangles)
   }
 }

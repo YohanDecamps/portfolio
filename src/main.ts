@@ -33,9 +33,13 @@ let cameraComponent = new Camera()
 camera.addComponent(cameraComponent)
 cameraComponent.start()
 
-const renderer = useRenderer()
+const view = await useRenderer(scene, cameraComponent.getCamera(), {
+  focusDistance: 4,
+  focalLength: 8,
+  bokehScale: 4
+})
 
-export let app = new App(renderer, cameraComponent.getCamera())
+export let app = new App(view)
 
 cameraComponent.lookAt(0, 0, 0)
 app.add(camera)

@@ -7,7 +7,10 @@ export default defineConfig({
         manualChunks: {
           three: [
             'three',
-            'three/examples/jsm/loaders/GLTFLoader'
+            'three/webgpu',
+            'three/tsl',
+            'three/examples/jsm/loaders/GLTFLoader',
+            'three/addons/tsl/display/DepthOfFieldNode.js'
           ],
         },
       },

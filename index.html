@@ -5,6 +5,19 @@
     <link rel="icon" type="image/svg+xml" href="/images/YD.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yohan Decamps Portfolio</title>
+    <!--
+      three/webgpu reads GPUShaderStage at module scope. On a browser without
+      WebGPU that identifier is undefined, so importing the module throws before
+      WebGPURenderer can fall back to its WebGL2 backend. Defining it here — a
+      classic script, so it runs before any (deferred) module chunk loads — lets
+      the module load and the fallback engage. No-op on a real WebGPU browser.
+      Values are the WebGPU spec bit flags.
+    -->
+    <script>
+      if (!globalThis.GPUShaderStage) {
+        globalThis.GPUShaderStage = { VERTEX: 1, FRAGMENT: 2, COMPUTE: 4 }
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>
