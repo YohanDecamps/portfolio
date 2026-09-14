@@ -668,7 +668,7 @@
         {
           "type": "Text",
           "attributes": {
-            "text": "SceneLab is a rendering engine\nwritten in C++ and Open GL featuring\na BVH-accelerated raytracer, multiple\nrasterization models including \nPhong, Gouraud, Physically Based\nRendering (PBR).\n\nThis projects aims to give to the\nuser as much features as possible to\nachieve beautifull renders\n",
+            "text": "SceneLab is a rendering engine\nwritten in C++ and OpenGL featuring\na BVH-accelerated ray tracer, multiple\nrasterization models including \nPhong, Gouraud, Physically Based\nRendering (PBR).\n\nThis projects aims to give to the\nuser as many features as possible to\nachieve beautifull renders.\n",
             "size": "0.30"
           }
         }
@@ -696,7 +696,7 @@
         {
           "type": "Text",
           "attributes": {
-            "text": "Lunar Lounge is a game made in just 10 weeks in the\ncontext of the Ubisoft Game Lab Competion in Canada,\n\nIn this couch multiplayer game taking place in a\nretro furturistic restaurant you must battle your\nopponent by using abilities to serve the clients first.\n\nLeading this project has been a great learning\nexperience as it was my first time working along\nartists, the also game was nominated for the jury's\nspecial award",
+            "text": "Lunar Lounge is a game made in just 10 weeks in the\ncontext of the Ubisoft Game Lab Competion in Canada,\n\nIn this couch multiplayer game taking place in a\nretro futuristic restaurant you must battle your\nopponent by using abilities to serve the clients first.\n\nLeading this project has been a great learning\nexperience as it was my first time working along\nartists, the game was also nominated for the jury's\nspecial award.",
             "size": "0.3"
           }
         }
@@ -724,7 +724,7 @@
         {
           "type": "Text",
           "attributes": {
-            "text": "R-type is a game engine featuring an ECS, scripting and a\nphysics engine inspired by Falling Everything, the physics\nengine developped for the game Noita.\n\nI developped this pixel based physics engine that relies on\nbreakable rigidbodies and a cellular automaton.\n\nFor breakable rigidbodies I implemented several geometry\nalgorithms such as marching squares to generate the objects\nborders, douglas-peucker to optimize them and tesselation\nto generate convex composite colliders.",
+            "text": "R-type is a game engine featuring an ECS, scripting and a\nphysics engine inspired by Falling Everything, the physics\nengine developed for the game Noita.\n\nI developed this pixel based physics engine that relies on\nbreakable rigid bodies and a cellular automaton.\n\nFor breakable rigid bodies I implemented several geometry\nalgorithms such as marching squares to generate the objects\nborders, douglas-peucker to optimize them and tesselation\nto generate convex composite colliders.",
             "size": "0.3"
           }
         }
@@ -752,7 +752,7 @@
         {
           "type": "Text",
           "attributes": {
-            "text": "The Zappy is a world simulation project where factions of bots\nfight for the control of ressources on a map. The projects\nincludes a server that manages the game logic, an AI client that\ncommunicates with the server to drive the bots, and a 3D GUI\nclient that displays the infos sent by the server.\n\nIn this project I worked on the GUI written in C++ and OpenGL that\nfeatures procedural terrain generation and 3D skeletal animation.\n\nThis project won the Zappy contest in the GUI, AI, and server\ncategoriesa",
+            "text": "The Zappy is a world simulation project where factions of bots\nfight for the control of resources on a map. The projects\nincludes a server that manages the game logic, an AI client that\ncommunicates with the server to drive the bots, and a 3D GUI\nclient that displays the info sent by the server.\n\nIn this project I worked on the GUI written in C++ and OpenGL that\nfeatures procedural terrain generation and 3D skeletal animation.\n\nThis project won the Zappy contest in the GUI, AI, and server\ncategories.",
             "size": "0.3"
           }
         }
@@ -780,7 +780,7 @@
         {
           "type": "Text",
           "attributes": {
-            "text": "         EPITECH is a software developpement\n         school based on a highly autonomus\n         project-based pedagogy delivering a\n diploma of Expert in Software Engineering.",
+            "text": "         EPITECH is a software developement\n         school based on a highly autonomus\n         project-based pedagogy delivering a\n diploma of Expert in Software Engineering.",
             "size": "0.4"
           }
         }
@@ -808,7 +808,7 @@
         {
           "type": "Text",
           "attributes": {
-            "text": "        At Fonroche Lighting I developped a\nmonitoring tool communicating with over 200 000\nconnect devices driven by an event-base\narchitecture using the MQTT protocol",
+            "text": "        At Fonroche Lighting I developed a\nmonitoring tool communicating with over 200 000\nconnected devices driven by an event-base\narchitecture using the MQTT protocol.",
             "size": "0.4"
           }
         }
@@ -836,7 +836,7 @@
         {
           "type": "Text",
           "attributes": {
-            "text": "   Creation of tratment pipelines on SQL\nserver data wharehouses, Power BI dashboards and\n                               archiving tooling",
+            "text": "   Creation of treatment pipelines on SQL\nserver data warehouses, Power BI dashboards and\n                               archiving tooling.",
             "size": "0.4"
           }
         }
@@ -864,7 +864,7 @@
         {
           "type": "Text",
           "attributes": {
-            "text": "Laval University is a school located in\n    Québec City, it delivers courses in\n   Software Engineering and Information\n technologies. I followed 10 different courses\n    including Graphics Programming, Video Game\n         Developpent and Software Architecture",
+            "text": "Laval University is a school located in\n    Québec City, it delivers courses in\n   Software Engineering and Information\n technologies. I followed 10 different courses\n    including Graphics Programming, Video Game\n         Development and Software Architecture",
             "size": "0.4"
           }
         }
@@ -892,7 +892,7 @@
         {
           "type": "Text",
           "attributes": {
-            "text": "        I'm currently looking for a 6 month\n        internship debuting March 1st 2027.",
+            "text": "        I'm currently looking for a 6 month\n        internship debuting March 1st, 2027.",
             "size": "0.4"
           }
         }
@@ -1008,7 +1008,7 @@
         {
           "type": "Text",
           "attributes": {
-            "text": "Use the arrows keys to move",
+            "text": "Use the arrow keys to move",
             "size": "0.4"
           }
         }
