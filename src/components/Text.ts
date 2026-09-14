@@ -31,15 +31,16 @@ export class Text extends Component {
 
   /** Rebuilds the canvas texture + plane. Call again if `text`, `font`, `color`, or `lineHeight` change at runtime. */
   private buildTextMesh(): void {
-    const fontFamily = assetPool.getFont(this.font)?.data.familyName
+    const family = assetPool.getFont(this.font)?.data.familyName ?? 'monospace'
+    const fontPx = 30
+    const cssFont = `${fontPx}px "${family}", monospace`
     const lines = this.text.split('\n')
   
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')!
-    const fontPx = 30
     const lineHeightPx = fontPx * this.lineHeight
   
-    ctx.font = `${fontPx}px ${fontFamily}`
+    ctx.font = cssFont
   
     let maxWidth = 0
     for (const line of lines) {
@@ -50,7 +51,7 @@ export class Text extends Component {
     canvas.width = Math.max(1, Math.ceil(maxWidth))
     canvas.height = Math.max(1, Math.ceil(lineHeightPx * lines.length))
   
-    ctx.font = `${fontPx}px ${fontFamily}`
+    ctx.font = cssFont
     ctx.textBaseline = 'middle'
     ctx.fillStyle = this.color
   

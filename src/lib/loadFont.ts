@@ -8,3 +8,9 @@ export function loadFont(url: string): Promise<Font> {
   })
 }
 
+export async function loadBrowserFont(family: string, url: string): Promise<void> {
+  const face = new FontFace(family, `url(${url})`)
+  await face.load()
+  document.fonts.add(face)
+}
+

@@ -3,7 +3,7 @@ import { loadGLB } from '../lib/loadGLB'
 import type { GameObject } from '../components/GameObject'
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import type { Font } from 'three/examples/jsm/loaders/FontLoader.js';
-import { loadFont } from '../lib/loadFont';
+import { loadFont, loadBrowserFont } from '../lib/loadFont';
 
 export class AssetPool {
   private static models: Map<string, THREE.Object3D> = new Map()
@@ -88,9 +88,14 @@ export class AssetPool {
     const modelPromises = modelList.map(
       ([name, path]) => loadGLB(path).then(model => [name, model] as const)
     )
-    const fontPromise = loadFont('fonts/AdwaitaMono-Regular.json').then(
-      font => ['adwaita', font] as const
-    )
+    const fontPromise = loadFont('fonts/AdwaitaMono-Regular.json').then(async font => {
+      try {
+        await loadBrowserFont(font.data.familyName, 'fonts/AdwaitaMono-Regular.ttf')
+      } catch (error) {
+        console.warn(`Could not register "${font.data.familyName}" with the browser; text will use a fallback font.`, error)
+      }
+      return ['adwaita', font] as const
+    })
   
     // now wait for all of them together
     const [models, [fontName, font]] = await Promise.all([
