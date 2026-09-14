@@ -5,9 +5,9 @@ import { audioLoader, input, listener, world } from '../main'
 import * as THREE from 'three'
 
 export class PlayerMovementController extends Component {
-  public engineForce = 2
+  public engineForce = 1.5
   public brakeForce = 0.05
-  public maxSteering = 0.3
+  public maxSteering = 0.4
   public boostForce = 3
   
   private volume = 0
