@@ -34,7 +34,7 @@ export class AssetPool {
     return AssetPool.fonts.get(name)
   }
 
-  public async loadAllAssets(): Promise<void> {
+  public async loadAllAssets(onProgress?: (loaded: number, total: number) => void): Promise<void> {
     const modelList: [string, string][] = [
       ['ground', 'models/ground.glb'],
       ['vehicle', 'models/vehicle.glb'],
@@ -84,9 +84,16 @@ export class AssetPool {
       ['mash-paddle', 'models/mash-paddle.glb'],
     ]
   
+    const totalCount = modelList.length + 1 // +1 for the font
+    let loadedCount = 0
+    const report = () => onProgress?.(++loadedCount, totalCount)
+
     // fire off every load immediately (don't await here)
     const modelPromises = modelList.map(
-      ([name, path]) => loadGLB(path).then(model => [name, model] as const)
+      ([name, path]) => loadGLB(path).then(model => {
+        report()
+        return [name, model] as const
+      })
     )
     const fontPromise = loadFont('fonts/AdwaitaMono-Regular.json').then(async font => {
       try {
@@ -94,6 +101,7 @@ export class AssetPool {
       } catch (error) {
         console.warn(`Could not register "${font.data.familyName}" with the browser; text will use a fallback font.`, error)
       }
+      report()
       return ['adwaita', font] as const
     })
   
