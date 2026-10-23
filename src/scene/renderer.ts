@@ -1,7 +1,13 @@
 import * as THREE from 'three'
 
 export function useRenderer(): THREE.WebGLRenderer {
-  const renderer = new THREE.WebGLRenderer({ antialias: true })
+  let renderer: THREE.WebGLRenderer
+  try {
+    renderer = new THREE.WebGLRenderer({ antialias: true })
+  } catch (error) {
+    console.warn('WebGL with antialias failed; retrying without antialias.', error)
+    renderer = new THREE.WebGLRenderer({ antialias: false })
+  }
   renderer.setSize(window.innerWidth, window.innerHeight)
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   renderer.shadowMap.enabled = true;

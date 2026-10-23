@@ -62,7 +62,6 @@ function applyAttributes(target: any, attributes: Record<string, unknown>) {
     ) {
       applyAttributes(existing, value as Record<string, unknown>)
     } else {
-      console.log(`Setting ${target.constructor.name}.${key} =`, value)
       target[key] = value
     }
   }
@@ -173,16 +172,23 @@ export function loadGameObject(gameObjectData: any): GameObject {
   return gameObject
 }
 
-export async function loadScene(scenePath: string): Promise<GameObject[]> {
+export async function loadScene(scenePath: string, onProgress?: (fraction: number, message: string) => void): Promise<GameObject[]> {
   const gameObjects: GameObject[] = []
 
   const sceneData = await fetchJson(scenePath)
+  const total = (sceneData.prefabs?.length ?? 0) + (sceneData.gameObjects?.length ?? 0)
+  let processed = 0
+  const report = () => {
+    processed++
+    onProgress?.(total > 0 ? processed / total : 1, 'Building scene...')
+  }
 
   for (const prefabData of sceneData.prefabs ?? []) {
     const resolvedPrefabData = await resolveEntry(prefabData, scenePath)
     console.log(`Loading prefab: ${resolvedPrefabData.id}`)
     const prefab: GameObject = loadGameObject(resolvedPrefabData)
     assetPool.addPrefab(resolvedPrefabData.id, prefab)
+    report()
   }
 
   for (const gameObjectData of sceneData.gameObjects) {
@@ -193,6 +199,7 @@ export async function loadScene(scenePath: string): Promise<GameObject[]> {
       const prefab = assetPool.getPrefab(resolvedGameObjectData.prefab)
       if (!prefab) {
         console.warn(`Prefab not found: ${resolvedGameObjectData.prefab}`)
+        report()
         continue
       }
       const gameObject = prefab.clone()
@@ -211,11 +218,13 @@ export async function loadScene(scenePath: string): Promise<GameObject[]> {
         }
       }
       gameObjects.push(gameObject)
+      report()
       continue
     }
 
     const gameObject = loadGameObject(resolvedGameObjectData)
     gameObjects.push(gameObject)
+    report()
   }
 
   return gameObjects

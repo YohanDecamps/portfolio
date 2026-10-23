@@ -14,17 +14,43 @@ import { InputManager } from './lib/InputManager'
 const loadingScreen = document.getElementById('loading-screen')!
 const loadingBarFill = document.getElementById('loading-bar-fill')!
 const loadingText = document.getElementById('loading-text')!
+const loadingError = document.getElementById('loading-error')!
+const loadingErrorIcon = document.getElementById('loading-error-icon')!
+const loadingErrorText = document.getElementById('loading-error-text')!
+let loadingErrorShown = false
 
 function setProgress(percent: number, text: string) {
+  if (loadingErrorShown) return
   loadingBarFill.style.width = `${Math.min(100, Math.max(0, percent))}%`
   loadingText.textContent = text
 }
 
+function showError(message: string, showComputerIcon = false) {
+  loadingErrorShown = true
+  loadingBarFill.style.display = 'none'
+  loadingText.style.display = 'none'
+  loadingErrorIcon.style.display = showComputerIcon ? 'block' : 'none'
+  loadingErrorText.textContent = message
+  loadingError.hidden = false
+}
+
 window.addEventListener('unhandledrejection', () => {
-  if (!loadingScreen.classList.contains('hidden')) {
+  if (!loadingScreen.classList.contains('hidden') && !loadingErrorShown) {
     setProgress(100, 'Failed to load. See console.')
   }
 })
+
+window.addEventListener('error', () => {
+  if (!loadingScreen.classList.contains('hidden') && !loadingErrorShown) {
+    setProgress(100, 'Failed to load. See console.')
+  }
+})
+
+const isPhone = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+if (isPhone) {
+  showError('This portfolio is designed for desktop. Please use a computer instead.', true)
+  throw new Error('Phone detected; desktop only.')
+}
 
 setProgress(5, 'Initializing physics...')
 await RAPIER.init()
@@ -53,14 +79,22 @@ let cameraComponent = new Camera()
 camera.addComponent(cameraComponent)
 cameraComponent.start()
 
-const renderer = useRenderer()
+let renderer: THREE.WebGLRenderer
+try {
+  renderer = useRenderer()
+} catch (error) {
+  showError('This browser does not support WebGL. Please enable WebGL or try a different browser.')
+  throw error
+}
 
 export let app = new App(renderer, cameraComponent.getCamera())
 
 cameraComponent.lookAt(0, 0, 0)
 app.add(camera)
 
-await app.loadScene('/scenes/scene.json')
+await app.loadScene('/scenes/scene.json', (fraction, message) => {
+  setProgress(90 + fraction * 8, message)
+})
 setProgress(98, 'Starting...')
 
 let lookAtPlayerComponent = new LookAtPlayer()

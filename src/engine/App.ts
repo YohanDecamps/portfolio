@@ -82,9 +82,9 @@ export class App {
     return this.gameObjects.filter(go => go.tags.includes(tag))
   }
 
-  async loadScene(scenePath: string) {
+  async loadScene(scenePath: string, onProgress?: (fraction: number, message: string) => void) {
     await preloadJsonFiles(scenePath)
-    const loaded = await loadScene(scenePath)
+    const loaded = await loadScene(scenePath, onProgress)
     loaded.forEach(go => this.add(go))
   }
 

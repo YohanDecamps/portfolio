@@ -41,12 +41,38 @@
         font-size: 14px;
         color: #E4E7DBFF;
       }
+      #loading-error {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        max-width: min(420px, 80vw);
+        text-align: center;
+        color: #ffb4ab;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      #loading-error[hidden] {
+        display: none;
+      }
+      #loading-error-icon {
+        width: 32px;
+        height: 32px;
+      }
     </style>
   </head>
   <body>
     <div id="loading-screen">
       <div id="loading-bar"><div id="loading-bar-fill"></div></div>
       <div id="loading-text">Loading... 0%</div>
+      <div id="loading-error" hidden>
+        <svg id="loading-error-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: none;">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
+        <span id="loading-error-text"></span>
+      </div>
     </div>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
